@@ -1,0 +1,31 @@
+{
+
+    "products": [
+
+        {
+
+            "name": "Tv",
+
+            "price": 1300
+
+        },
+
+        {
+
+            "name": "Notebook",
+
+            "price": 2000
+
+        },
+
+        {
+
+            "name": "Celular",
+
+            "price": 3500
+
+        }
+
+    ]
+
+}
