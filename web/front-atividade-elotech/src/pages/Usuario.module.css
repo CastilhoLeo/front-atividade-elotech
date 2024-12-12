@@ -1,3 +1,8 @@
 .usuario {
     text-align: center;
 }
+
+.menu_usuario{
+    display: flex;
+    justify-content: center;
+}

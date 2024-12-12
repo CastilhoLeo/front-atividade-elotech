@@ -7,10 +7,31 @@ const CadastroUsuario = ({setNovoUsuario}) => {
     const [email, setEmail] = useState("")
     const [dataCadastro, setDataCadastro] = useState("")
     const [telefone, setTelefone] = useState("")
+    const [usuario, setUsuario] = useState({
+        nome:{nome},
+        email:{email},
+        dataCadastro:{dataCadastro},
+        telefone:{telefone}
+    })
+
+    console.log(nome)
+
+
 
 
     const handleSubmit = (e)=>{
         e.preventDefault()
+
+        const cadastroFetch = async ()=>{
+
+            const usuarioFetch = await fetch(`http://localhost:8080/usuario`, 
+                {method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body: JSON.stringify(usuario)})
+    
+        }
+        
+        cadastroFetch()
 
     }
   return (

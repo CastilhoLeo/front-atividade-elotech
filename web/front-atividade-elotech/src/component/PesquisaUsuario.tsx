@@ -1,20 +1,27 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { UsuarioContext } from "../context/UsuarioContext"
+import styles from "./PesquisaUsuario.module.css"
 
-const PesquisaUsuario = ({pesquisa, setPesquisa}) => {
+const PesquisaUsuario = () => {
 
     const [nome, setNome] = useState("")
+    const {pesquisa, setPesquisa} = useContext(UsuarioContext)
 
     
 
-    const handleClick =()=>{
+    const handleSubmit =(e)=>{
+      e.preventDefault()
         setPesquisa(nome)
     }
+    
   return (
     <>
+    <form className={styles.input_pesquisa} onSubmit={handleSubmit}>
       <label>
-        <input type="text" name="nome" placeholder="Digite o nome do usuários" onChange={()=>setNome(e.target.value)}/>
-        <button onClick={handleClick}>Pesquisar</button>
+        <input type="text" name="nome" placeholder="Digite o nome do usuários" onChange={(e)=>setNome(e.target.value)}/>
       </label>
+      <button type="submit">Pesquisar</button>
+      </form>
     </>
   )
 }

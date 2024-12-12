@@ -10,6 +10,7 @@ import Locacao from './pages/Locacao'
 
 
 
+
 function App() {
   
   return (
@@ -21,7 +22,7 @@ function App() {
     <Routes>
       <Route path = "/" element={<Inicio/>}/>
       <Route path = "/sobre" element={<Sobre/>}/>
-      <Route path = "/usuarios" element={<Usuario/>}/>
+      <Route path = "/usuarios" element={<Usuario/>}/>  
       <Route path = "/livros" element={<Livro/>}/>
       <Route path = "/locacoes" element={<Locacao/>}/>
     </Routes>

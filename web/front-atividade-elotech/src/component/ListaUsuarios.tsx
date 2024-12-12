@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './ListaUsuarios.module.css'
+import { UsuarioContext, UsuarioContextProvider } from '../context/UsuarioContext'
 
 const ListaUsuarios = () => {
-  const [dados, setDados] = useState([])
-  const[pesquisa, setPesquisa] = useState("")
+
+
+  const {dados, setDados, pesquisa, setPesquisa} = useContext(UsuarioContext)
 
   
   useEffect(()=>{
 
   const fetchUsuario = async ()=>{
 
-    const response = await fetch("http://localhost:8080/usuario?nome=")
+    const response = await fetch(`http://localhost:8080/usuario?nome=${pesquisa}`)
 
     const json = await response.json()
 
