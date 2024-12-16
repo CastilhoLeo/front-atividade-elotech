@@ -1,51 +1,100 @@
 
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import styles from './CadastroUsuario.module.css'
+import { UsuarioContext } from '../context/UsuarioContext'
+import { Usuario } from '../types/Usuario'
+import { cadastrarUsuario, editarUsuario } from '../service/UsuarioService'
 const CadastroUsuario = ({setNovoUsuario}) => {
 
-    const [nome, setNome] = useState("")
-    const [email, setEmail] = useState("")
-    const [dataCadastro, setDataCadastro] = useState("")
-    const [telefone, setTelefone] = useState("")
-    const [usuario, setUsuario] = useState({
-        nome:{nome},
-        email:{email},
-        dataCadastro:{dataCadastro},
-        telefone:{telefone}
-    })
+    const { usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar} = useContext(UsuarioContext)
 
-    console.log(nome)
+    const usuarioPadrao:Usuario = {
+        id:0,
+        nome: "",
+        email:"",
+        dataCadastro:"",
+        telefone:""
+    }
 
 
+    const handleChange = (campo: String, valor: any)=>{
+
+        setUsuario((prevUsuario: Usuario)=>({
+            ...prevUsuario,
+            [campo]:valor,
+        }));
+    
+      }
 
 
-    const handleSubmit = (e)=>{
+      const handleFechar = ()=>{
+        setNovoUsuario(false) 
+        setEditar(false)
+
+        if(atualizaLista){
+        setAtualizaLista(false)
+        } else{
+        setAtualizaLista(true)
+        }
+        setUsuario(null)
+      }
+
+
+    const handleSubmit =  async (e:React.FormEvent)=>{
         e.preventDefault()
+
+        if(editar){
+
+            const editarFetch = async (usuario: Usuario)=>{
+
+                await editarUsuario(usuario)
+
+        }
+        await editarFetch(usuario)
+
+        await setUsuario(usuarioPadrao)
+
+    }else{
 
         const cadastroFetch = async ()=>{
 
-            const usuarioFetch = await fetch(`http://localhost:8080/usuario`, 
-                {method:"POST",
-                headers:{"Content-Type":"application/json"},
-                body: JSON.stringify(usuario)})
+            await cadastrarUsuario(usuario)
     
         }
         
-        cadastroFetch()
+          await cadastroFetch()
+
+        await setUsuario(usuarioPadrao)
+
+         
+        }
 
     }
+
+
   return (
     <div className={styles.cadastro_usuario}>
       <form onSubmit={handleSubmit} className={styles.usuario_form}>
         <h1>Cadastro de usuário</h1>
+        {editar &&
+        <label>
+            <span>Id</span>
+            <input 
+                type="text"
+                name="id"
+                disabled 
+                value={usuario && usuario.id} 
+                onChange={(e)=>handleChange("id", e.target.value )}
+            />
+        </label>}
         <label>
             <span>Nome:</span>
             <input 
                 type="text"
                 name="nome"
                 required 
-                value={nome} 
-                onChange={(e)=>setNome(e.target.value)}
+                value={usuario && usuario.nome} 
+                onChange={(e)=>handleChange("nome", e.target.value )}
                 placeholder="Digite o nome do usuário"
             />
         </label>
@@ -55,8 +104,8 @@ const CadastroUsuario = ({setNovoUsuario}) => {
                 type="text"
                 name="email"
                 required 
-                value={email} 
-                onChange={(e)=>setEmail(e.target.value)}
+                value={usuario && usuario.email} 
+                onChange={(e)=>handleChange("email", e.target.value )}
                 placeholder="Digite o e-mail do usuário"
             />
         </label>
@@ -66,8 +115,8 @@ const CadastroUsuario = ({setNovoUsuario}) => {
                 type="date"
                 name="dataCadastro"
                 required 
-                value={dataCadastro} 
-                onChange={(e)=>setDataCadastro(e.target.value)}
+                value={usuario && usuario.dataCadastro} 
+                onChange={(e)=>handleChange("dataCadastro", e.target.value )}
             />
         </label>
         <label>
@@ -76,15 +125,15 @@ const CadastroUsuario = ({setNovoUsuario}) => {
                 type="tel"
                 name="telefone"
                 required 
-                value={telefone} 
-                onChange={(e)=>setTelefone(e.target.value)}
+                value={usuario && usuario.telefone} 
+                onChange={(e)=>handleChange("telefone", e.target.value )}
                 placeholder="(00)00000-0000"
                 maxLength={11}
             />
         </label>
         <div>
         <button className="btn_salvar">Enviar</button>
-        <button className="btn_fechar" type="button" onClick={()=>setNovoUsuario(false)}>Fechar</button>
+        <button className="btn_fechar" type="button" onClick={handleFechar}>Fechar</button>
         </div>
       </form>
       

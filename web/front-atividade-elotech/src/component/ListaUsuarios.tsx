@@ -1,30 +1,50 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styles from './ListaUsuarios.module.css'
 import { UsuarioContext, UsuarioContextProvider } from '../context/UsuarioContext'
+import { excluirUsuario, pesquisarUsuario } from '../service/UsuarioService'
 
-const ListaUsuarios = () => {
+const ListaUsuarios = ({setNovoUsuario}) => {
 
 
-  const {dados, setDados, pesquisa, setPesquisa} = useContext(UsuarioContext)
+  const {dados, setDados, pesquisa, setPesquisa , atualizaLista, setAtualizaLista, usuario, setUsuario, editar, setEditar} = useContext(UsuarioContext)
 
   
   useEffect(()=>{
 
   const fetchUsuario = async ()=>{
 
-    const response = await fetch(`http://localhost:8080/usuario?nome=${pesquisa}`)
+    const json = await pesquisarUsuario(pesquisa)
 
-    const json = await response.json()
-
-    setDados(json)
+    setDados(json);
   }
 
-  fetchUsuario();
+  fetchUsuario()
   
 
-},[pesquisa])
+},[pesquisa, atualizaLista])
 
-console.log (dados)
+const handleExcluir =  async (id: number)=>{
+
+  if (confirm("deseja realmete excluir?")){
+    
+    await excluirUsuario(id)
+
+
+   if(atualizaLista){
+    setAtualizaLista(false)
+    } else{
+    setAtualizaLista(true)
+    }
+  }
+
+}
+
+const handleEditar= (usuario)=>{
+  setEditar(true)
+  setNovoUsuario(true)
+  setUsuario(usuario)
+}
+
 
   return (
     <table className={styles.lista_usuario}>
@@ -47,8 +67,8 @@ console.log (dados)
             <td>{u.email}</td>
             <td>{u.telefone}</td>
             <td>
-              <button id={u.id}>Editar</button>
-              <button id={u.id}>Excluir</button>
+              <button id={u.id} onClick={()=>handleEditar(u)}>Editar</button>
+              <button id={u.id} onClick={()=>handleExcluir(u.id)}>Excluir</button>
             </td>
         </tr>
           ))}

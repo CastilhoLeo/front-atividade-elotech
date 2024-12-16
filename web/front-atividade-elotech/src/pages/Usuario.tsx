@@ -10,6 +10,9 @@ const Usuario = () => {
   
   const[novoUsuario, setNovoUsuario] = useState(false)
 
+  console.log(novoUsuario)
+
+
   return (
     <UsuarioContextProvider>
     <div className={styles.usuario}>
@@ -18,7 +21,7 @@ const Usuario = () => {
       <button onClick={()=>setNovoUsuario(true)}>Novo Usuario</button>
       {novoUsuario && <CadastroUsuario setNovoUsuario={setNovoUsuario}/>}
       </div>
-      <ListaUsuarios/>
+      <ListaUsuarios setNovoUsuario={setNovoUsuario}/>
     </div>
     </UsuarioContextProvider>
   )
