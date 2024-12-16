@@ -65,8 +65,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
           await cadastroFetch()
 
         await setUsuario(usuarioPadrao)
-
-         
+  
         }
 
     }
