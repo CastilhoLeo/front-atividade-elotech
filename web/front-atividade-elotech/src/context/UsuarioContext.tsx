@@ -8,7 +8,13 @@ export const UsuarioContextProvider = ({children}) =>{
     
     const [dados, setDados] = useState<Usuario>([])
     const[pesquisa, setPesquisa] = useState("")
-    const [usuario, setUsuario] = useState<Usuario | null>(null)
+    const [usuario, setUsuario] = useState<Usuario | null>({
+        id:0,
+        nome: "",
+        email:"",
+        dataCadastro:"",
+        telefone:""
+    })
     const [atualizaLista, setAtualizaLista] = useState(false)
     const[editar, setEditar] = useState(false)
 

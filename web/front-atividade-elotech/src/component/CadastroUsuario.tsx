@@ -17,7 +17,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
     }
 
 
-    const handleChange = (campo: String, valor: any)=>{
+    const handleChange = (campo: any, valor: any)=>{
 
         setUsuario((prevUsuario: Usuario)=>({
             ...prevUsuario,
@@ -36,7 +36,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
         } else{
         setAtualizaLista(true)
         }
-        setUsuario(null)
+        setUsuario(usuarioPadrao)
       }
 
 
@@ -52,7 +52,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
         }
         await editarFetch(usuario)
 
-        await setUsuario(usuarioPadrao)
+        
 
     }else{
 
@@ -64,9 +64,9 @@ const CadastroUsuario = ({setNovoUsuario}) => {
         
           await cadastroFetch()
 
-        await setUsuario(usuarioPadrao)
-  
         }
+
+        setUsuario(usuarioPadrao)
 
     }
 
@@ -82,7 +82,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
                 type="text"
                 name="id"
                 disabled 
-                value={usuario && usuario.id} 
+                value={usuario.id} 
                 onChange={(e)=>handleChange("id", e.target.value )}
             />
         </label>}
@@ -92,7 +92,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
                 type="text"
                 name="nome"
                 required 
-                value={usuario && usuario.nome} 
+                value={usuario.nome} 
                 onChange={(e)=>handleChange("nome", e.target.value )}
                 placeholder="Digite o nome do usuário"
             />
@@ -103,7 +103,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
                 type="text"
                 name="email"
                 required 
-                value={usuario && usuario.email} 
+                value={usuario.email} 
                 onChange={(e)=>handleChange("email", e.target.value )}
                 placeholder="Digite o e-mail do usuário"
             />
@@ -114,7 +114,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
                 type="date"
                 name="dataCadastro"
                 required 
-                value={usuario && usuario.dataCadastro} 
+                value={usuario.dataCadastro} 
                 onChange={(e)=>handleChange("dataCadastro", e.target.value )}
             />
         </label>
@@ -124,7 +124,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
                 type="tel"
                 name="telefone"
                 required 
-                value={usuario && usuario.telefone} 
+                value={usuario.telefone} 
                 onChange={(e)=>handleChange("telefone", e.target.value )}
                 placeholder="(00)00000-0000"
                 maxLength={11}

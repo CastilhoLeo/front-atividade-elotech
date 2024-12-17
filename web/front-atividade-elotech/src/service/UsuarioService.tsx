@@ -1,8 +1,10 @@
 import { Usuario } from "../types/Usuario"
 
+const urlBase:String = "http://localhost:8080/usuario"
+
 export const pesquisarUsuario = async (pesquisa: String)=>{
 
-    const response = await fetch(`http://localhost:8080/usuario?nome=${pesquisa}`)
+    const response = await fetch(`${urlBase}?nome=${pesquisa}`)
 
     const json = await response.json()
 
@@ -12,13 +14,13 @@ export const pesquisarUsuario = async (pesquisa: String)=>{
 
 export const excluirUsuario = async (id: number)=>{
 
-    await fetch(`http://localhost:8080/usuario/${id}`,{method:"DELETE"} )
+    await fetch(`${urlBase}/${id}`,{method:"DELETE"} )
 
 } 
 
 export const  editarUsuario = async (usuario: Usuario)=>{
 
- await fetch(`http://localhost:8080/usuario/${usuario.id}`, 
+ await fetch(`${urlBase}/${usuario.id}`, 
     {method:"PUT",
     headers:{"Content-Type":"application/json"},
     body: JSON.stringify(usuario)})
@@ -27,7 +29,7 @@ export const  editarUsuario = async (usuario: Usuario)=>{
 
 export const cadastrarUsuario = async (usuario: Usuario)=>{
 
-    const usuarioFetch = await fetch(`http://localhost:8080/usuario`, 
+    const usuarioFetch = await fetch(`${urlBase}`, 
         {method:"POST",
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify(usuario)})

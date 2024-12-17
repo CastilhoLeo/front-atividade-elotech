@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import styles from './ListaUsuarios.module.css'
 import { UsuarioContext, UsuarioContextProvider } from '../context/UsuarioContext'
 import { excluirUsuario, pesquisarUsuario } from '../service/UsuarioService'
+import { Usuario } from '../types/Usuario'
 
 const ListaUsuarios = ({setNovoUsuario}) => {
 
@@ -39,7 +40,7 @@ const handleExcluir =  async (id: number)=>{
 
 }
 
-const handleEditar= (usuario)=>{
+const handleEditar= (usuario: Usuario)=>{
   setEditar(true)
   setNovoUsuario(true)
   setUsuario(usuario)
@@ -59,16 +60,16 @@ const handleEditar= (usuario)=>{
         </tr>
         </thead>
         <tbody>
-          {dados.map((u)=>(
-            <tr key={u.id}>
-            <td>{u.id}</td>
-            <td>{u.dataCadastro}</td>
-            <td>{u.nome}</td>
-            <td>{u.email}</td>
-            <td>{u.telefone}</td>
+          {dados.map((usuario:Usuario)=>(
+            <tr key={usuario.id}>
+            <td>{usuario.id}</td>
+            <td>{usuario.dataCadastro}</td>
+            <td>{usuario.nome}</td>
+            <td>{usuario.email}</td>
+            <td>{usuario.telefone}</td>
             <td>
-              <button id={u.id} onClick={()=>handleEditar(u)}>Editar</button>
-              <button id={u.id} onClick={()=>handleExcluir(u.id)}>Excluir</button>
+              <button id={usuario.id} onClick={()=>handleEditar(usuario)}>Editar</button>
+              <button id={usuario.id} onClick={()=>handleExcluir(usuario.id)}>Excluir</button>
             </td>
         </tr>
           ))}
