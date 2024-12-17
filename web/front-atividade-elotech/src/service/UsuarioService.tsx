@@ -4,15 +4,19 @@ const urlBase:String = "http://localhost:8080/usuario"
 
 export const pesquisarUsuario = async (pesquisa: String)=>{
 
+
     const response = await fetch(`${urlBase}?nome=${pesquisa}`)
 
     const json = await response.json()
 
     return json
+    
+    
 }
 
 
 export const excluirUsuario = async (id: number)=>{
+   
 
     await fetch(`${urlBase}/${id}`,{method:"DELETE"} )
 
@@ -20,7 +24,8 @@ export const excluirUsuario = async (id: number)=>{
 
 export const  editarUsuario = async (usuario: Usuario)=>{
 
- await fetch(`${urlBase}/${usuario.id}`, 
+ 
+    await fetch(`${urlBase}/${usuario.id}`, 
     {method:"PUT",
     headers:{"Content-Type":"application/json"},
     body: JSON.stringify(usuario)})
@@ -29,8 +34,10 @@ export const  editarUsuario = async (usuario: Usuario)=>{
 
 export const cadastrarUsuario = async (usuario: Usuario)=>{
 
+
     const usuarioFetch = await fetch(`${urlBase}`, 
         {method:"POST",
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify(usuario)})
+
 }

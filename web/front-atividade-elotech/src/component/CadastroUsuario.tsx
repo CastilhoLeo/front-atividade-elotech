@@ -6,7 +6,7 @@ import { Usuario } from '../types/Usuario'
 import { cadastrarUsuario, editarUsuario } from '../service/UsuarioService'
 const CadastroUsuario = ({setNovoUsuario}) => {
 
-    const { usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar} = useContext(UsuarioContext)
+    const { usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, error, setError} = useContext(UsuarioContext)
 
     const usuarioPadrao:Usuario = {
         id:0,
@@ -42,6 +42,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
 
     const handleSubmit =  async (e:React.FormEvent)=>{
         e.preventDefault()
+        
 
         if(editar){
 
@@ -55,6 +56,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
         
 
     }else{
+        
 
         const cadastroFetch = async ()=>{
 
@@ -63,6 +65,8 @@ const CadastroUsuario = ({setNovoUsuario}) => {
         }
         
           await cadastroFetch()
+
+          
 
         }
 

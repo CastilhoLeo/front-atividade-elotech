@@ -17,9 +17,10 @@ export const UsuarioContextProvider = ({children}) =>{
     })
     const [atualizaLista, setAtualizaLista] = useState(false)
     const[editar, setEditar] = useState(false)
+    const [erro, setErro] = useState("")
 
     return(
-        <UsuarioContext.Provider value={{ dados, setDados, pesquisa, setPesquisa, usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar}}>
+        <UsuarioContext.Provider value={{ dados, setDados, pesquisa, setPesquisa, usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, erro, setErro}}>
             {children}
         </UsuarioContext.Provider>
     )
