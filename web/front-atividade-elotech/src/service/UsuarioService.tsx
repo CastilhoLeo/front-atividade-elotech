@@ -25,19 +25,23 @@ export const excluirUsuario = async (id: number)=>{
 export const  editarUsuario = async (usuario: Usuario)=>{
 
  
-    await fetch(`${urlBase}/${usuario.id}`, 
+    const response = await fetch(`${urlBase}/${usuario.id}`, 
     {method:"PUT",
     headers:{"Content-Type":"application/json"},
     body: JSON.stringify(usuario)})
+
+    return response
 
 }
 
 export const cadastrarUsuario = async (usuario: Usuario)=>{
 
 
-    const usuarioFetch = await fetch(`${urlBase}`, 
+     const response = await fetch(`${urlBase}`, 
         {method:"POST",
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify(usuario)})
+
+    return response
 
 }

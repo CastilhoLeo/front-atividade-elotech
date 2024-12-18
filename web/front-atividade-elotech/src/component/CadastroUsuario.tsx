@@ -42,35 +42,38 @@ const CadastroUsuario = ({setNovoUsuario}) => {
 
     const handleSubmit =  async (e:React.FormEvent)=>{
         e.preventDefault()
-        
 
+        try{
+
+            
         if(editar){
 
-            const editarFetch = async (usuario: Usuario)=>{
+            const response = await editarUsuario(usuario)
 
-                await editarUsuario(usuario)
+            if(response.ok){
+                alert("usuario editado com sucesso")
+            }
+
+
+        }else{
+
+            const response = await cadastrarUsuario(usuario)
+
+            const json = await response.json()
+
+            if(response.ok){
+                alert("usuario editado com sucesso")
+            }else{
+                alert(json.message)
+            }
+
+            setUsuario(usuarioPadrao)
 
         }
-        await editarFetch(usuario)
+    }catch(error: any){
+        alert(error.message)
 
-        
-
-    }else{
-        
-
-        const cadastroFetch = async ()=>{
-
-            await cadastrarUsuario(usuario)
-    
-        }
-        
-          await cadastroFetch()
-
-          
-
-        }
-
-        setUsuario(usuarioPadrao)
+    }
 
     }
 
