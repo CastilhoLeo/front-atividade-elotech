@@ -18,8 +18,9 @@ export const pesquisarUsuario = async (pesquisa: String)=>{
 export const excluirUsuario = async (id: number)=>{
    
 
-    await fetch(`${urlBase}/${id}`,{method:"DELETE"} )
+    const response = await fetch(`${urlBase}/${id}`,{method:"DELETE"} )
 
+    return response
 } 
 
 export const  editarUsuario = async (usuario: Usuario)=>{
