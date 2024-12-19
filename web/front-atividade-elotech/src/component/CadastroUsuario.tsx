@@ -12,7 +12,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
         id:0,
         nome: "",
         email:"",
-        dataCadastro:"",
+        dataCadastro: "",
         telefone:""
     }
 
@@ -50,8 +50,13 @@ const CadastroUsuario = ({setNovoUsuario}) => {
 
             const response = await editarUsuario(usuario)
 
+            const json = await response.json()
+
             if(response.ok){
                 alert("usuario editado com sucesso")
+                setUsuario(usuarioPadrao)
+            }else{
+                alert(json.message)
             }
 
 
@@ -62,12 +67,11 @@ const CadastroUsuario = ({setNovoUsuario}) => {
             const json = await response.json()
 
             if(response.ok){
-                alert("usuario editado com sucesso")
+                alert("usuario cadastrado com sucesso")
+                setUsuario(usuarioPadrao)
             }else{
                 alert(json.message)
             }
-
-            setUsuario(usuarioPadrao)
 
         }
     }catch(error: any){

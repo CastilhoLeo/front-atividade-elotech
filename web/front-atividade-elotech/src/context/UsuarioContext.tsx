@@ -12,7 +12,7 @@ export const UsuarioContextProvider = ({children}) =>{
         id:0,
         nome: "",
         email:"",
-        dataCadastro:"",
+        dataCadastro: "",
         telefone:""
     })
     const [atualizaLista, setAtualizaLista] = useState(false)
