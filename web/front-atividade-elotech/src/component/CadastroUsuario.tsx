@@ -12,7 +12,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
         id:0,
         nome: "",
         email:"",
-        dataCadastro: "",
+        dataCadastro: new Date(),
         telefone:""
     }
 
@@ -31,11 +31,8 @@ const CadastroUsuario = ({setNovoUsuario}) => {
         setNovoUsuario(false) 
         setEditar(false)
 
-        if(atualizaLista){
-        setAtualizaLista(false)
-        } else{
-        setAtualizaLista(true)
-        }
+        atualizaLista ? setAtualizaLista(false) : setAtualizaLista(true)
+
         setUsuario(usuarioPadrao)
       }
 

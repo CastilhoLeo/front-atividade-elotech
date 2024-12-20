@@ -63,7 +63,7 @@ const handleEditar= (usuario: Usuario)=>{
           {dados.map((usuario:Usuario)=>(
             <tr key={usuario.id}>
             <td>{usuario.id}</td>
-            <td>{usuario.dataCadastro}</td>
+            <td>{new Date(usuario.dataCadastro).toLocaleDateString('pt-BR')}</td>
             <td>{usuario.nome}</td>
             <td>{usuario.email}</td>
             <td>{usuario.telefone}</td>
