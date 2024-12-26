@@ -1,0 +1,8 @@
+.livro {
+    text-align: center;
+}
+
+.menu_livro{
+    display: flex;
+    justify-content: center;
+}

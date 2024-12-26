@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { UsuarioContext } from "../context/UsuarioContext"
+import { UsuarioContext } from "../../context/UsuarioContext"
 import styles from "./PesquisaUsuario.module.css"
 
 const PesquisaUsuario = () => {
@@ -18,7 +18,7 @@ const PesquisaUsuario = () => {
     <>
     <form className={styles.input_pesquisa} onSubmit={handleSubmit}>
       <label>
-        <input type="text" name="nome" placeholder="Digite o nome do usuários" onChange={(e)=>setNome(e.target.value)}/>
+        <input type="text" name="nome" placeholder="Digite o nome do usuário" onChange={(e)=>setNome(e.target.value)}/>
       </label>
       <button type="submit">Pesquisar</button>
       </form>

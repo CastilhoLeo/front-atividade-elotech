@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import styles from './ListaUsuarios.module.css'
-import { UsuarioContext } from '../context/UsuarioContext'
-import { excluirUsuario, pesquisarUsuario } from '../service/UsuarioService'
-import { Usuario } from '../types/Usuario'
+import { UsuarioContext } from '../../context/UsuarioContext'
+import { excluirUsuario, pesquisarUsuario } from '../../service/UsuarioService'
+import { Usuario } from '../../types/Usuario'
 
 const ListaUsuarios = ({setNovoUsuario}) => {
 
