@@ -1,0 +1,8 @@
+.emprestimo {
+    text-align: center;
+}
+
+.menu_emprestimo{
+    display: flex;
+    justify-content: center;
+}

@@ -6,7 +6,7 @@ import Sobre from './pages/Sobre'
 import Inicio from './pages/Inicio'
 import Usuario from './pages/Usuario'
 import Livro from './pages/Livro'
-import Locacao from './pages/Locacao'
+import Emprestimo from './pages/Emprestimo'
 
 
 
@@ -24,7 +24,7 @@ function App() {
       <Route path = "/sobre" element={<Sobre/>}/>
       <Route path = "/usuarios" element={<Usuario/>}/>  
       <Route path = "/livros" element={<Livro/>}/>
-      <Route path = "/locacoes" element={<Locacao/>}/>
+      <Route path = "/emprestimos" element={<Emprestimo/>}/>
     </Routes>
     </BrowserRouter>
    </div>

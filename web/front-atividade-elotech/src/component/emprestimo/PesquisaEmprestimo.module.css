@@ -1,0 +1,18 @@
+.input_pesquisa input{
+    height: 3em;
+    border-radius: 1em;
+    width: 20em;
+    text-align: center;
+}
+
+.input_pesquisa select{
+    height: 3em;
+    border-radius: 1em;
+    width: 10em;
+    text-align: center;
+}
+
+.input_pesquisa option{
+    font-size: 1.0em;
+    text-align: center;
+}
