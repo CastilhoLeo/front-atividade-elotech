@@ -1,12 +1,14 @@
 import React from 'react'
 import {  LocacaoContextProvider } from '../context/LocacaoContext'
+import PesquisaLocacao from '../component/locacao/PesquisaLocacao'
 
 const Locacao = () => {
   return (
 
     <LocacaoContextProvider>
     <div>
-      Locacao
+      <PesquisaLocacao/>
+      <button>Nova locação</button>
     </div>
     </LocacaoContextProvider>
   )

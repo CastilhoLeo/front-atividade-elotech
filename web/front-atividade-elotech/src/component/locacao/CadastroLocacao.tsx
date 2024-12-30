@@ -2,7 +2,7 @@
 const CadastroLocacao = () => {
   return (
     <div>
-      
+      teste
     </div>
   )
 }
