@@ -30,12 +30,9 @@ const handleExcluir =  async (id: number)=>{
     
     await excluirUsuario(id)
 
+   
+    setAtualizaLista(!atualizaLista)
 
-   if(atualizaLista){
-    setAtualizaLista(false)
-    } else{
-    setAtualizaLista(true)
-    }
   }
 
 }

@@ -4,24 +4,34 @@ import { EmprestimoContext } from '../../context/EmprestimoContext'
 
 const PesquisaEmprestimo = () => {
 
-  const {pesquisa, setPesquisa, campoPesquisa, setCampoPesquisa} = useContext(EmprestimoContext)
+  
+  const {dados, setDados, atualizaLista, setAtualizaLista, pesquisa, setPesquisa} = useContext(EmprestimoContext)
 
   const handleSubmit = (e)=>{
     e.preventDefault()
-    
-    
+
+
+  }
+
+  const handleChange = (campo, valor)=>{
+
+    setPesquisa((prevPesquisa)=>({
+      ...prevPesquisa,
+      [campo]:valor
+    })) 
+
   }
   
   return (
     <> 
         <form className={style.input_pesquisa} onSubmit={handleSubmit}>
-            <select name="campoPesquisa" onChange={(e)=>setCampoPesquisa(e.target.value)}>
-                 <option value="Usuario">Usuario</option>
-                <option value="Livro">Livro</option>
+            <select name="campoPesquisa" onChange={(e)=>handleChange("tipo", e.target.value)}>
+                 <option value="usuario">Usuario</option>
+                <option value="titulo">Titulo</option>
             </select>
 
         <label>
-            <input type="text" placeholder="Digite a pesquisa..." onChange={(e)=>setPesquisa(e.target.value)}/>
+            <input type="text" placeholder="Digite a pesquisa..." onChange={(e)=>handleChange("texto", e.target.value)}/>
         </label>
 
         <button>Pesquisar</button>

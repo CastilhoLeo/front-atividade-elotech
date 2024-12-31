@@ -29,8 +29,11 @@ const ListaLivros = ({setNovoLivro}) => {
     }
 
     const handleExcluir = async (id:number)=>{
+
+        if (confirm("deseja realmete excluir?")){
         await excluirLivro(id)
-        atualizaLista ? setAtualizaLista(false) : setAtualizaLista(true)
+        setAtualizaLista(!atualizaLista)
+        }
     }
 
   return (
