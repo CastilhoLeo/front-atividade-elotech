@@ -2,6 +2,7 @@ import {  EmprestimoContextProvider } from '../context/EmprestimoContext'
 import PesquisaEmprestimo from '../component/emprestimo/PesquisaEmprestimo'
 import styles from './Emprestimo.module.css'
 import ListaEmprestimo from '../component/emprestimo/ListaEmprestimo'
+import CadastroEmprestimo from '../component/emprestimo/CadastroEmprestimo'
 
 const Emprestimo = () => {
   return (
@@ -11,6 +12,7 @@ const Emprestimo = () => {
     <div className={styles.menu_emprestimo}>
       <PesquisaEmprestimo/>
       <button>Novo Empréstimo</button>
+      <CadastroEmprestimo/>
     </div>
     <ListaEmprestimo/>
     </div>

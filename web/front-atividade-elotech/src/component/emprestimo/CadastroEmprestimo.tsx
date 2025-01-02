@@ -2,7 +2,14 @@
 const CadastroEmprestimo = () => {
   return (
     <div>
-      teste
+      <form>
+        <label>Usuario ID</label>
+        <input type="number" />
+        <label>Livro ID</label>
+        <input type="number" />
+        <label>Data Emprestimo</label>
+        <input type="date" />
+      </form>
     </div>
   )
 }
