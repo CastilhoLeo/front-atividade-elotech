@@ -1,14 +1,21 @@
 import { useContext, useState } from 'react'
 import style from './PesquisaEmprestimo.module.css'
 import { EmprestimoContext } from '../../context/EmprestimoContext'
+import { pesquisarEmprestimo } from '../../service/EmprestimoService'
 
 const PesquisaEmprestimo = () => {
 
   
   const {dados, setDados, atualizaLista, setAtualizaLista, pesquisa, setPesquisa} = useContext(EmprestimoContext)
 
-  const handleSubmit = (e)=>{
+  const handleSubmit = async (e)=>{
     e.preventDefault()
+
+    const res = await pesquisarEmprestimo(pesquisa.tipo, pesquisa.texto)
+
+    setDados(res.content)
+
+    setAtualizaLista(!atualizaLista)
 
 
   }
