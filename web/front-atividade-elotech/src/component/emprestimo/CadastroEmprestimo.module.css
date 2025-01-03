@@ -1,4 +1,4 @@
-.cadastro_livro{
+.cadastro_emprestimo{
     position: fixed;
     top: 0;
     left: 0;
@@ -9,7 +9,7 @@
     justify-content: center;
     align-items: center; 
   }
-  .livro_form{
+  .emprestimo_form{
       border-radius: 1em;
       background-color: white;
       width: 30em;
@@ -21,26 +21,27 @@
   }
   
   
-  .livro_form label{
+  .emprestimo_form label{
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 2em;
   }
   
-  .livro_form span{
+  .emprestimo_form span{
       font-size: large;
       font-weight: bold;
   }
   
   
-  .livro_form input{
+  .emprestimo_form input{
       margin: 0.5em;
       text-align: center;
       width: 20em;
   }
   
-  .livro_form button{
+  .emprestimo_form button{
       margin-bottom: 1em;
       margin-right: 1em;
+      margin-top: 1em;
   }

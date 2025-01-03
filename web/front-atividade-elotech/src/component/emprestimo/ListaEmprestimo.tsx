@@ -4,7 +4,7 @@ import { pesquisarEmprestimo } from "../../service/EmprestimoService"
 import { Emprestimo } from "../../types/Emprestimo"
 
 
-const ListaEmprestimo = ()=>{
+const ListaEmprestimo = ({cadastro, setCadastro})=>{
 
     const {dados, setDados, atualizaLista, setAtualizaLista, pesquisa, setPesquisa} = useContext(EmprestimoContext)
 
