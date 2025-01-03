@@ -1,12 +1,28 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { EmprestimoContext } from "../../context/EmprestimoContext"
 import styles from './CadastroEmprestimo.module.css'
+import { RequestEmprestimoDTO } from "../../types/RequestEmprestimoDTO"
+
 
 const CadastroEmprestimo = ({cadastro, setCadastro}) => {
+
+  const [requestEmprestimoDTO, setRequestEmprestimoDTO] = useState({
+    usuarioID:0,
+    livroID:0,
+    dataEmprestimo:""})
 
 
   const handleClick = ()=>{
     setCadastro(!cadastro)
+  }
+
+  const handleChange = (campo, valor)=>{
+    setRequestEmprestimoDTO((prevRequestEmprestimoDTO)=>({
+      ...prevRequestEmprestimoDTO,
+      [campo]:valor
+    }))
+
+    
   }
 
   const handleSubmit = ()=>{
@@ -21,16 +37,16 @@ const CadastroEmprestimo = ({cadastro, setCadastro}) => {
 
         <label>
           <span>Usuário ID</span>
-          <input type="number" />
+          <input type="number" onChange={(e)=>handleChange("usuarioID", e.target.value)} />
         </label>
         
         <label>
         <span>Livro ID</span>
-        <input type="number" />
+        <input type="number" onChange={(e)=>handleChange("livroID", e.target.value)} />
         </label>
         <label> 
         <span>Data Emprestimo</span>
-        <input type="date" />
+        <input type="date" onChange={(e)=>handleChange("dataEmprestimo", e.target.value)}/>
         </label>
         <div>
           <button>Salvar</button>

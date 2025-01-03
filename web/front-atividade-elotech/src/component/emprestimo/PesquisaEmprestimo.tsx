@@ -3,9 +3,10 @@ import style from './PesquisaEmprestimo.module.css'
 import { EmprestimoContext } from '../../context/EmprestimoContext'
 import { pesquisarEmprestimo } from '../../service/EmprestimoService'
 
+
 const PesquisaEmprestimo = () => {
 
-  
+ 
   const {dados, setDados, atualizaLista, setAtualizaLista, pesquisa, setPesquisa} = useContext(EmprestimoContext)
 
   const handleSubmit = async (e)=>{
