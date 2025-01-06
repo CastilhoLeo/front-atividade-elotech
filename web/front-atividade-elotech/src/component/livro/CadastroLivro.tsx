@@ -109,8 +109,8 @@ const CadastroLivro = ({setNovoLivro}) => {
       </label>
     
         <div>
-        <button>Salvar</button>
-        <button type="button" onClick={handleClick}>Fechar</button>
+        <button className="btn_salvar">Salvar</button>
+        <button type="button" onClick={handleClick} className="btn_fechar">Fechar</button>
         </div>
 
     </form>

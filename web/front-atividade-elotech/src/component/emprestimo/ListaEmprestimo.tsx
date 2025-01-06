@@ -1,12 +1,19 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { EmprestimoContext } from "../../context/EmprestimoContext"
-import { pesquisarEmprestimo } from "../../service/EmprestimoService"
+import { devolverEmprestimo, pesquisarEmprestimo } from "../../service/EmprestimoService"
 import { Emprestimo } from "../../types/Emprestimo"
+import styles from './ListaEmprestimo.module.css'
 
 
 const ListaEmprestimo = ({cadastro, setCadastro})=>{
 
     const {dados, setDados, atualizaLista, setAtualizaLista, pesquisa, setPesquisa} = useContext(EmprestimoContext)
+
+    const[devolucao, setDevolucao] = useState(false)
+    const[requestDevolucao, setRequestDevolucao] = useState({
+        id: 0,
+        dataDevolucao: new Date
+    })
 
     useEffect(()=>{
 
@@ -22,20 +29,42 @@ const ListaEmprestimo = ({cadastro, setCadastro})=>{
 
     },[atualizaLista])
 
-    const handleEditar = ()=>{
 
-    }
+    const handleDevolucao = (id:number)=>{
 
-    const handleExcluir = ()=>{
+        setDevolucao(!devolucao)
+        setRequestDevolucao((prevRequestDevolucao)=>({
+            ...prevRequestDevolucao,
+            id:id
+        }))
         
     }
 
-    const handleDevolucao = ()=>{
-        
+    const handleChange = (dataDevolucao:Date)=>{
+        setRequestDevolucao((prevRequestDevolucao)=>({
+            ...prevRequestDevolucao,
+            dataDevolucao:dataDevolucao
+        }))
+    }
+
+    const handleSubmit = async (e)=>{
+
+        e.preventDefault()
+
+        await devolverEmprestimo(requestDevolucao)
+
+        setDevolucao(!devolucao)
+
+        setAtualizaLista(!atualizaLista)
+    }
+
+    const handleCancelarDevolucao = ()=>{
+        setDevolucao(!devolucao)
     }
 
     return(
 
+        <>
         <table>
             <thead>
                 <tr>
@@ -58,16 +87,35 @@ const ListaEmprestimo = ({cadastro, setCadastro})=>{
                         <td>{emprestimo.dataDevolucao && new Date(emprestimo.dataDevolucao).toLocaleDateString("pt-BR")}</td>
                         <td>{emprestimo.status}</td>
                         <td>
-                        <button onClick={()=>handleDevolucao()}>Devolver</button>
-                        <button onClick={()=>handleEditar()}>Editar</button>
-                        <button onClick={()=>handleExcluir()}>Excluir</button>
+                        {emprestimo.status == "EMPRESTADO" && <button onClick={()=>handleDevolucao(emprestimo.id)}>Devolver</button>}
                         </td>
                     </tr>
                 ))}
-                
 
+            {devolucao &&         
+                <div className={styles.devolucao}>
+                    
+                    <form onSubmit={handleSubmit} className={styles.devolucao_form}>
+                        <h1>Devolução</h1>
+                        <label>
+                            <span>Emprestimo ID</span>
+                            <input type="number" value={requestDevolucao.id} disabled/>
+                        </label>
+                        <label>
+                            <span>Data Devolução</span>
+                            <input type="date" onChange={(e)=>handleChange( e.target.value)}/>
+                        </label>
+                        <div>
+                            <button className="btn_salvar">Confirmar</button>
+                            <button className="btn_fechar" onClick={handleCancelarDevolucao}>Cancelar</button>
+                        </div>
+                    </form>
+                </div>}
+                
             </tbody>
         </table>
+
+        </>
     )
 }
 

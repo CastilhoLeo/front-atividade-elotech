@@ -1,0 +1,47 @@
+.devolucao{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+  }
+  .devolucao_form{
+      border-radius: 1em;
+      background-color: white;
+      width: 20em;
+      height: 20em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+  }
+  
+  
+  .devolucao_form label{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2em;
+  }
+  
+  .devolucao_form span{
+      font-size: large;
+      font-weight: bold;
+  }
+  
+  
+  .devolucao_form input{
+      margin: 0.5em;
+      text-align: center;
+      width: 10em;
+  }
+  
+  .devolucao_form button{
+      margin-bottom: 1em;
+      margin-right: 1em;
+
+  }

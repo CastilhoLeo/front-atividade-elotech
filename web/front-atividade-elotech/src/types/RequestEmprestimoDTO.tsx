@@ -1,5 +1,7 @@
+import { Emprestimo } from "./Emprestimo"
+
 export type RequestEmprestimoDTO = {
-    usuarioID: number,
-    livroID:number,
+    usuarioId: number,
+    livroId:number,
     dataEmprestimo:Date
 }
