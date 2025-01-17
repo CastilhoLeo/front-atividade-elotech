@@ -31,7 +31,7 @@ const CadastroLivro = ({setNovoLivro}) => {
       setNovoLivro(false)
       setLivro(livroPadrao);
       setEditar(false);
-      atualizaLista ? setAtualizaLista(false) : setAtualizaLista(true)
+      setAtualizaLista(!atualizaLista)
     }
 
     const handleSubmit = async (e)=>{
