@@ -2,6 +2,6 @@ export type Usuario = {
     id?: number | null;
     nome: string;
     email: string;
-    dataPublicacao: Date;
+    dataCadastro: Date;
     telefone: string;
 }

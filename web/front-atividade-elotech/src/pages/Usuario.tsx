@@ -8,9 +8,7 @@ import { useState } from 'react'
 
 const Usuario = () => {
   
-  const[novoUsuario, setNovoUsuario] = useState(false)
-
-  console.log(novoUsuario)
+  const[novoUsuario, setNovoUsuario] = useState<boolean>(false)
 
 
   return (

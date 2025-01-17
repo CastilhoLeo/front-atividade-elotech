@@ -1,23 +1,40 @@
 import { createContext, useState } from "react";
-import {Usuario} from '../types/Usuario'
+import { UsuarioContextInicial } from "../types/UsuarioContextInicial";
 
-export const UsuarioContext = createContext();
 
-export const UsuarioContextProvider = ({children}) =>{
+const usuarioContextInicial: UsuarioContextInicial = {
 
-    
-    const [dados, setDados] = useState<Usuario>([])
-    const[pesquisa, setPesquisa] = useState("")
-    const [usuario, setUsuario] = useState<Usuario | null>({
+    dados:[],
+    setDados:()=>{},
+    pesquisa: "",
+    setPesquisa:()=>{},
+    usuario: {
         id:0,
         nome: "",
         email:"",
-        dataCadastro: "",
+        dataCadastro: new Date(),
         telefone:""
-    })
-    const [atualizaLista, setAtualizaLista] = useState(false)
-    const[editar, setEditar] = useState(false)
-    const [erro, setErro] = useState("")
+    },
+    setUsuario:()=>{},
+    atualizaLista:false,
+    setAtualizaLista:()=>{},
+    editar:false,
+    setEditar:()=>{},
+    erro:"",
+    setErro:()=>{}
+
+}
+export const UsuarioContext = createContext<UsuarioContextInicial | null>(usuarioContextInicial);
+
+export const UsuarioContextProvider = ({children}:any) =>{
+
+    
+    const [dados, setDados] = useState(usuarioContextInicial.dados)
+    const[pesquisa, setPesquisa] = useState(usuarioContextInicial.pesquisa)
+    const [usuario, setUsuario] = useState(usuarioContextInicial.usuario)
+    const [atualizaLista, setAtualizaLista] = useState(usuarioContextInicial.atualizaLista)
+    const[editar, setEditar] = useState(usuarioContextInicial.editar)
+    const [erro, setErro] = useState(usuarioContextInicial.erro)
 
     return(
         <UsuarioContext.Provider value={{ dados, setDados, pesquisa, setPesquisa, usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, erro, setErro}}>

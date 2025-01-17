@@ -4,6 +4,7 @@ import styles from './CadastroUsuario.module.css'
 import { UsuarioContext } from '../../context/UsuarioContext'
 import { Usuario } from '../../types/Usuario'
 import { cadastrarUsuario, editarUsuario } from '../../service/UsuarioService'
+
 const CadastroUsuario = ({setNovoUsuario}) => {
 
     const { usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, error, setError} = useContext(UsuarioContext)
