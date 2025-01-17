@@ -1,4 +1,4 @@
-export type Livro{
+export type Livro = {
     id?: number | null,
     titulo: String,
     autor: String,

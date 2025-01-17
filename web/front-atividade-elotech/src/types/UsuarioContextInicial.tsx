@@ -1,6 +1,6 @@
 import { Usuario } from "./Usuario"
 
-export type UsuarioContextInicial {
+export type UsuarioContextInicial = {
     dados: Array<Usuario>;
     setDados:(novoState:Array<Usuario>)=> void;
     pesquisa: String;

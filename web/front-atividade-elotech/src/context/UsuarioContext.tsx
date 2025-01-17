@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import { UsuarioContextInicial } from "../types/UsuarioContextInicial";
 
 
+
 const usuarioContextInicial: UsuarioContextInicial = {
 
     dados:[],
@@ -37,7 +38,8 @@ export const UsuarioContextProvider = ({children}:any) =>{
     const [erro, setErro] = useState(usuarioContextInicial.erro)
 
     return(
-        <UsuarioContext.Provider value={{ dados, setDados, pesquisa, setPesquisa, usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, erro, setErro}}>
+        <UsuarioContext.Provider value={{ dados, setDados, pesquisa, setPesquisa,
+         usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, erro, setErro}}>
             {children}
         </UsuarioContext.Provider>
     )
