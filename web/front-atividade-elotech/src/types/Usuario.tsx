@@ -1,5 +1,5 @@
 export type Usuario = {
-    id?: number | null;
+    id?: number;
     nome: string;
     email: string;
     dataCadastro: Date;

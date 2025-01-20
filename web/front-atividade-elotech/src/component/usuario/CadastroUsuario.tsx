@@ -5,9 +5,19 @@ import { UsuarioContext } from '../../context/UsuarioContext'
 import { Usuario } from '../../types/Usuario'
 import { cadastrarUsuario, editarUsuario } from '../../service/UsuarioService'
 
-const CadastroUsuario = ({setNovoUsuario}) => {
+interface Props{
+    setNovoUsuario: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-    const {usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, error, setError} = useContext(UsuarioContext)
+const CadastroUsuario = ({setNovoUsuario}:Props) => {
+
+    const context = useContext(UsuarioContext);
+
+    if (!context) {
+        throw new Error("Erro no provider do context");
+    }
+
+    const { usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, erro, setErro } = context;
 
     const usuarioPadrao:Usuario = {
         id:0,
@@ -18,7 +28,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
     }
 
 
-    const handleChange = (campo: any, valor: any)=>{
+    const handleChange = (campo: string, valor: number | Date | String)=>{
 
         setUsuario((prevUsuario: Usuario)=>({
             ...prevUsuario,
@@ -31,6 +41,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
       const handleFechar = ()=>{
         setNovoUsuario(false) 
         setEditar(false)
+        setErro("")
 
         atualizaLista ? setAtualizaLista(false) : setAtualizaLista(true)
 
@@ -52,7 +63,6 @@ const CadastroUsuario = ({setNovoUsuario}) => {
 
             if(response.ok){
                 alert("usuario editado com sucesso")
-                setUsuario(usuarioPadrao)
             }else{
                 alert(json.message)
             }
@@ -73,8 +83,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
 
         }
     }catch(error: any){
-        alert(error.message)
-
+        setErro(error.message)
     }
 
     }
@@ -123,7 +132,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
                 type="date"
                 name="dataCadastro"
                 required 
-                value={usuario.dataCadastro} 
+                value={usuario.dataCadastro}
                 onChange={(e)=>handleChange("dataCadastro", e.target.value )}
             />
         </label>
@@ -140,6 +149,7 @@ const CadastroUsuario = ({setNovoUsuario}) => {
             />
         </label>
         <div>
+            {(erro != "") && <h1>{erro}</h1> }
         <button className="btn_salvar">Enviar</button>
         <button className="btn_fechar" type="button" onClick={handleFechar}>Fechar</button>
         </div>

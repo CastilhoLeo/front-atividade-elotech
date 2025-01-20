@@ -25,9 +25,9 @@ const usuarioContextInicial: UsuarioContextInicial = {
     setErro:()=>{}
 
 }
-export const UsuarioContext = createContext<UsuarioContextInicial | null>(usuarioContextInicial);
+export const UsuarioContext = createContext<UsuarioContextInicial | null>(null);
 
-export const UsuarioContextProvider = ({children}:any) =>{
+export const UsuarioContextProvider = ({children}:{children:React.ReactNode}) =>{
 
     
     const [dados, setDados] = useState(usuarioContextInicial.dados)
