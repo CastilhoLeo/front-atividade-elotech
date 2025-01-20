@@ -1,28 +1,45 @@
-import { createContext, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { Livro } from "../types/Livro";
+import { LivroContextInicial } from "../types/LivroContextInicial";
 
-export const LivroContext = createContext()
-
-
-export const LivroContextProvider = ({children})=>{
-
-    const [pesquisa, setPesquisa] = useState("")
-    const [dados, setDados] = useState([])
-    const [editar, setEditar] = useState(false)
-    const [atualizaLista, setAtualizaLista] = useState(false)
-    const [livro, setLivro] = useState<Livro | null>({
-        id:0,
+const livroContextInicial:LivroContextInicial = {
+    dados:[],
+    setDados:()=>{},
+    pesquisa: "",
+    setPesquisa:()=>{},
+    livro: {
+        id:null,
         titulo: "",
-        autor: "",
+        autor:"",
+        dataPublicacao: new Date(),
         isbn:"",
-        dataPublicacao:"",
         categoria:""
-})
+    },
+    setLivro:()=>{},
+    atualizaLista:false,
+    setAtualizaLista:()=>{},
+    editar:false,
+    setEditar:()=>{},
+    erro:"",
+    setErro:()=>{}
+}
+
+export const LivroContext = createContext<LivroContextInicial | null>(null)
+
+
+export const LivroContextProvider = ({children}:{children: React.ReactNode})=>{
+
+    const [pesquisa, setPesquisa] = useState(livroContextInicial.pesquisa)
+    const [dados, setDados] = useState(livroContextInicial.dados)
+    const [editar, setEditar] = useState(livroContextInicial.editar)
+    const [atualizaLista, setAtualizaLista] = useState(livroContextInicial.atualizaLista)
+    const [livro, setLivro] = useState<Livro>(livroContextInicial.livro)
+    const [erro, setErro] = useState(livroContextInicial.erro)
     
 
 
 return(
-    <LivroContext.Provider value={{pesquisa, setPesquisa, dados, setDados, livro, setLivro, editar, setEditar, atualizaLista, setAtualizaLista}}>
+    <LivroContext.Provider value={{pesquisa, setPesquisa, dados, setDados, livro, setLivro, editar, setEditar, atualizaLista, setAtualizaLista, erro, setErro}}>
         {children}
     </LivroContext.Provider>
 )

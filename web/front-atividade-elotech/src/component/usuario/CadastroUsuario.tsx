@@ -14,7 +14,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
     const context = useContext(UsuarioContext);
 
     if (!context) {
-        throw new Error("Erro no provider do context");
+        throw new Error("Erro no context");
     }
 
     const { usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, erro, setErro } = context;

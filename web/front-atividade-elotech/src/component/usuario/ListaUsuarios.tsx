@@ -4,11 +4,21 @@ import { UsuarioContext } from '../../context/UsuarioContext'
 import { excluirUsuario, pesquisarUsuario } from '../../service/UsuarioService'
 import { Usuario } from '../../types/Usuario'
 
-const ListaUsuarios = ({setNovoUsuario}) => {
+interface Props{
+  setNovoUsuario:React.Dispatch<React.SetStateAction<boolean>>
+}
 
+const ListaUsuarios = ({setNovoUsuario}:Props) => {
 
-  const {dados, setDados, pesquisa, setPesquisa , atualizaLista, setAtualizaLista, usuario, setUsuario, editar, setEditar} = useContext(UsuarioContext)
+  const context = useContext(UsuarioContext);
 
+  if (!context){
+    throw new Error("Erro no context")
+  }
+
+  const {dados, setDados, pesquisa , atualizaLista, setAtualizaLista, setUsuario, setEditar} = context
+
+  
   
   useEffect(()=>{
 

@@ -1,15 +1,20 @@
-import { useContext, useState } from "react"
+import { ReactEventHandler, useContext, useState } from "react"
 import { UsuarioContext } from "../../context/UsuarioContext"
 import styles from "./PesquisaUsuario.module.css"
 
 const PesquisaUsuario = () => {
 
-    const [nome, setNome] = useState("")
-    const {pesquisa, setPesquisa} = useContext(UsuarioContext)
+  const context = useContext(UsuarioContext)
+  if(!context){
+    throw new Error ("Erro no contexto")
+  }
+
+    const [nome, setNome] = useState<string>("")
+    const {setPesquisa} = context
 
     
 
-    const handleSubmit =(e)=>{
+    const handleSubmit =(e:React.FormEvent)=>{
       e.preventDefault()
         setPesquisa(nome)
     }
