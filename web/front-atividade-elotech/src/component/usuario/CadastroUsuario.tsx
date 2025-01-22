@@ -4,6 +4,8 @@ import styles from './CadastroUsuario.module.css'
 import { UsuarioContext } from '../../context/UsuarioContext'
 import { Usuario } from '../../types/Usuario'
 import { cadastrarUsuario, editarUsuario } from '../../service/UsuarioService'
+import { Formik } from 'formik'
+import Usuario from '../../pages/Usuario'
 
 interface Props{
     setNovoUsuario: React.Dispatch<React.SetStateAction<boolean>>
@@ -28,15 +30,6 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
     }
 
 
-    const handleChange = (campo: string, valor: number | Date | String)=>{
-
-        setUsuario((prevUsuario: Usuario)=>({
-            ...prevUsuario,
-            [campo]:valor,
-        }));
-    
-      }
-
 
       const handleFechar = ()=>{
         setNovoUsuario(false) 
@@ -49,8 +42,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
       }
 
 
-    const handleSubmit =  async (e:React.FormEvent)=>{
-        e.preventDefault()
+    const handleSubmit =  async (usuario: Usuario)=>{
 
         try{
 
@@ -88,30 +80,42 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
     }
 
+    const valorInicial = editar? usuario : usuarioPadrao;
+
 
   return (
     <div className={styles.cadastro_usuario}>
-      <form onSubmit={handleSubmit} className={styles.usuario_form}>
+    
+    <Formik
+    initialValues={
+        valorInicial
+    }
+
+    onSubmit={handleSubmit}
+    
+    >
+    {({ handleChange, handleSubmit, values }) => (
+      <form className={styles.usuario_form} onSubmit={handleSubmit}>
         <h1>Cadastro de usuário</h1>
-        {editar &&
+        {editar && (
         <label>
             <span>Id</span>
             <input 
                 type="text"
                 name="id"
                 disabled 
-                value={usuario.id} 
-                onChange={(e)=>handleChange("id", e.target.value )}
+                value={values.id} 
+                onChange={handleChange}
             />
-        </label>}
+        </label>)}
         <label>
             <span>Nome:</span>
             <input 
                 type="text"
                 name="nome"
                 required 
-                value={usuario.nome} 
-                onChange={(e)=>handleChange("nome", e.target.value )}
+                value={values.nome} 
+                onChange={handleChange}
                 placeholder="Digite o nome do usuário"
             />
         </label>
@@ -121,8 +125,8 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
                 type="text"
                 name="email"
                 required 
-                value={usuario.email} 
-                onChange={(e)=>handleChange("email", e.target.value )}
+                value={values.email} 
+                onChange={handleChange}
                 placeholder="Digite o e-mail do usuário"
             />
         </label>
@@ -132,8 +136,8 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
                 type="date"
                 name="dataCadastro"
                 required 
-                value={usuario.dataCadastro}
-                onChange={(e)=>handleChange("dataCadastro", e.target.value )}
+                value={values.dataCadastro}
+                onChange={handleChange}
             />
         </label>
         <label>
@@ -142,18 +146,20 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
                 type="tel"
                 name="telefone"
                 required 
-                value={usuario.telefone} 
-                onChange={(e)=>handleChange("telefone", e.target.value )}
+                value={values.telefone} 
+                onChange={handleChange}
                 placeholder="(00)00000-0000"
                 maxLength={11}
             />
         </label>
         <div>
             {(erro != "") && <h1>{erro}</h1> }
-        <button className="btn_salvar">Enviar</button>
+        <button className="btn_salvar" type='submit'>Enviar</button>
         <button className="btn_fechar" type="button" onClick={handleFechar}>Fechar</button>
         </div>
       </form>
+    )}
+      </Formik>
       
     </div>
   )
