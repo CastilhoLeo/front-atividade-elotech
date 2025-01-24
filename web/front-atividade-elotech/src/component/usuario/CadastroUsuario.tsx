@@ -4,9 +4,8 @@ import styles from './CadastroUsuario.module.css'
 import { UsuarioContext } from '../../context/UsuarioContext'
 import { Usuario } from '../../types/Usuario'
 import { cadastrarUsuario, editarUsuario } from '../../service/UsuarioService'
-import { Formik } from 'formik'
-import Usuario from '../../pages/Usuario'
-
+import { ErrorMessage, Field, Formik } from 'formik'
+import * as Yup from 'yup'
 interface Props{
     setNovoUsuario: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -25,7 +24,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
         id:0,
         nome: "",
         email:"",
-        dataCadastro: new Date(),
+        dataCadastro: new Date().toDateString(),
         telefone:""
     }
 
@@ -82,75 +81,58 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
     const valorInicial = editar? usuario : usuarioPadrao;
 
+    const validationSchema = Yup.object({
+        
+        nome: Yup.string().required("O nome é obrigatório")
+            .min(5, "O nome deve ter no minimo 5 caracteres"),
+
+        email: Yup.string().required("O email é obrigatório").email("E-mail invalido"),
+
+        dataCadastro: Yup.date().required("A data é obrigatória"),
+
+        telefone: Yup.string().required("O telefone é obrigatório").min(11, "O telefone deve ter 11 digitos")
+            .max(11, "O telefone deve ter 11 digitos")
+    })
+
 
   return (
     <div className={styles.cadastro_usuario}>
     
     <Formik
-    initialValues={
-        valorInicial
-    }
+    initialValues={valorInicial}
 
     onSubmit={handleSubmit}
+
+    validationSchema={validationSchema}
     
     >
-    {({ handleChange, handleSubmit, values }) => (
+    {({ handleSubmit, values }) => (
       <form className={styles.usuario_form} onSubmit={handleSubmit}>
         <h1>Cadastro de usuário</h1>
         {editar && (
         <label>
             <span>Id</span>
-            <input 
-                type="text"
-                name="id"
-                disabled 
-                value={values.id} 
-                onChange={handleChange}
-            />
+            <Field type="text" name="id" disabled value={values.id}/>
         </label>)}
         <label>
             <span>Nome:</span>
-            <input 
-                type="text"
-                name="nome"
-                required 
-                value={values.nome} 
-                onChange={handleChange}
-                placeholder="Digite o nome do usuário"
-            />
+            <Field type="text" name="nome" placeholder="Digite o nome do usuário"/>
+            <ErrorMessage component="div" name="nome"/>
         </label>
         <label>
             <span>E-mail:</span>
-            <input 
-                type="text"
-                name="email"
-                required 
-                value={values.email} 
-                onChange={handleChange}
-                placeholder="Digite o e-mail do usuário"
-            />
-        </label>
+            <Field type="text" name="email" placeholder="Digite o e-mail do usuário"/>
+            <ErrorMessage component="div" name="email"/>
+         </label>
         <label>
             <span>Data cadastro:</span>
-            <input 
-                type="date"
-                name="dataCadastro"
-                required 
-                value={values.dataCadastro}
-                onChange={handleChange}
-            />
+            <Field type="date" name="dataCadastro"/>
+            <ErrorMessage component="div" name="dataCadastro"/>
         </label>
         <label>
             <span>Telefone:</span>
-            <input 
-                type="tel"
-                name="telefone"
-                required 
-                value={values.telefone} 
-                onChange={handleChange}
-                placeholder="(00)00000-0000"
-                maxLength={11}
-            />
+            <Field type="tel" name="telefone"  placeholder="(00)00000-0000" maxLength={11}/>
+            <ErrorMessage component="div" name="telefone"/>
         </label>
         <div>
             {(erro != "") && <h1>{erro}</h1> }
