@@ -13,7 +13,7 @@ const usuarioContextInicial: UsuarioContextInicial = {
         id:0,
         nome: "",
         email:"",
-        dataCadastro: new Date(),
+        dataCadastro: new Date().toDateString(),
         telefone:""
     },
     setUsuario:()=>{},

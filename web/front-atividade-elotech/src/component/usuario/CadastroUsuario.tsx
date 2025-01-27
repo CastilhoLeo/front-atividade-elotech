@@ -4,7 +4,7 @@ import styles from './CadastroUsuario.module.css'
 import { UsuarioContext } from '../../context/UsuarioContext'
 import { Usuario } from '../../types/Usuario'
 import { cadastrarUsuario, editarUsuario } from '../../service/UsuarioService'
-import { ErrorMessage, Field, Formik } from 'formik'
+import { ErrorMessage, Field, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 interface Props{
     setNovoUsuario: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,7 +29,6 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
     }
 
 
-
       const handleFechar = ()=>{
         setNovoUsuario(false) 
         setEditar(false)
@@ -41,7 +40,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
       }
 
 
-    const handleSubmit =  async (usuario: Usuario)=>{
+    const handleSubmit =  async (usuario: Usuario, actions:FormikHelpers<Usuario>)=>{
 
         try{
 
@@ -67,15 +66,16 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
             if(response.ok){
                 alert("usuario cadastrado com sucesso")
-                setUsuario(usuarioPadrao)
+                actions.resetForm()
             }else{
                 alert(json.message)
             }
 
         }
+
     }catch(error: any){
         setErro(error.message)
-    }
+        }
 
     }
 
@@ -101,7 +101,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
     <Formik
     initialValues={valorInicial}
 
-    onSubmit={handleSubmit}
+    onSubmit={(values, actions)=>{handleSubmit(values, actions)}}
 
     validationSchema={validationSchema}
     

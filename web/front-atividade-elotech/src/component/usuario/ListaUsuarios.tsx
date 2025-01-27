@@ -75,8 +75,8 @@ const handleEditar= (usuario: Usuario)=>{
             <td>{usuario.email}</td>
             <td>{usuario.telefone}</td>
             <td>
-              <button id={usuario.id} onClick={()=>handleEditar(usuario)}>Editar</button>
-              <button id={usuario.id} onClick={()=>handleExcluir(usuario.id)}>Excluir</button>
+              <button onClick={()=>handleEditar(usuario)}>Editar</button>
+              <button onClick={()=>handleExcluir(usuario.id)}>Excluir</button>
             </td>
         </tr>
           ))}
