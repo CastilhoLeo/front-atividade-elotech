@@ -6,6 +6,8 @@ import { Usuario } from '../../types/Usuario'
 import { cadastrarUsuario, editarUsuario } from '../../service/UsuarioService'
 import { ErrorMessage, Field, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
+
+
 interface Props{
     setNovoUsuario: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -24,7 +26,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
         id:0,
         nome: "",
         email:"",
-        dataCadastro: new Date().toDateString(),
+        dataCadastro: new Date().toLocaleDateString('pt-BR'),
         telefone:""
     }
 
@@ -81,7 +83,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
     const valorInicial = editar? usuario : usuarioPadrao;
 
-    const validationSchema = Yup.object({
+    const validationSchema:Yup.AnySchema = Yup.object({
         
         nome: Yup.string().required("O nome é obrigatório")
             .min(5, "O nome deve ter no minimo 5 caracteres"),

@@ -3,7 +3,7 @@ export type Livro = {
     titulo: String,
     autor: String,
     isbn: string,
-    dataPublicacao: Date,
+    dataPublicacao: String,
     categoria: String
 
 }

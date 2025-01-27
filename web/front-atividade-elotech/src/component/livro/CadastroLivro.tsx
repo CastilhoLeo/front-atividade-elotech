@@ -3,28 +3,31 @@ import { LivroContext } from "../../context/LivroContext"
 import { Livro } from "../../types/Livro"
 import style from "./CadastroLivro.module.css"
 import { cadastroLivro, editarLivro } from "../../service/LivroService"
+import { Field, Formik } from "formik"
+import * as Yup from 'yup'
+
+interface Props{
+  setNovoLivro:React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const CadastroLivro = ({setNovoLivro}:Props) => {
 
 
-const CadastroLivro = ({setNovoLivro}) => {
+  const context = useContext(LivroContext)
 
-    const {livro, setLivro, editar, setEditar, atualizaLista, setAtualizaLista} = useContext(LivroContext)
+  if (!context){
+    throw new Error("Erro no contexto")
+  }
+
+    const {livro, setLivro, editar, setEditar, atualizaLista, setAtualizaLista} = context
 
     const livroPadrao: Livro = {
             id:0,
             titulo: "",
             autor: "",
             isbn:"",
-            dataPublicacao: "",
+            dataPublicacao: new Date().toLocaleDateString('pt-BR'),
             categoria:""
-    }
-
-    const handleChange = (campo:any, valor:any)=>{
-
-        setLivro((prevLivro:Livro)=>({
-            ...prevLivro,
-            [campo]:valor
-        }))
-
     }
 
     const handleClick = ()=>{
@@ -73,39 +76,56 @@ const CadastroLivro = ({setNovoLivro}) => {
 
   }
 
+  const initialValues = editar? livro : livroPadrao
+
+  const validationSchema:Yup.AnySchema = Yup.object({
+
+  })
 
   return (
     <div className={style.cadastro_livro}>
+
+    <Formik 
+
+    initialValues={initialValues}
+
+    onSubmit={handleSubmit}
+
+    validationSchema={validationSchema}
+    >
+      {({handleSubmit, values})=>(
+        
     <form className={style.livro_form} onSubmit={handleSubmit}>
       <h1>Cadastro livro</h1>
-      {editar && <label>
+      {editar && 
+      <label>
       <span>Id</span>
-      <input type="number" value={livro.id} disabled/>
+      <Field type="number" value={values.id} disabled/>
       </label>}
 
       <label>
       <span>Título</span>
-      <input type="text" value={livro.titulo} onChange={(e)=>handleChange("titulo", e.target.value)}/>
+      <Field type="text" value={values.titulo}/>
       </label>
 
       <label>
       <span>Autor</span>
-      <input type="text" value={livro.autor} onChange={(e)=>handleChange("autor", e.target.value)}/>
+      <Field type="text" value={values.autor}/>
       </label>
 
       <label>
       <span>ISBN</span>
-      <input type="text" value={livro.isbn} onChange={(e)=>handleChange("isbn", e.target.value)}/>
+      <Field type="text" value={values.isbn}/>
       </label>
 
       <label>
       <span>Data de Publicação</span>
-      <input type="date" value={livro.dataPublicacao} onChange={(e)=>handleChange("dataPublicacao", e.target.value)}/>
+      <Field type="date" value={values.dataPublicacao}/>
       </label>
 
       <label>
       <span>Categoria</span>
-      <input type="text" value={livro.categoria} onChange={(e)=>handleChange("categoria", e.target.value)}/>
+      <Field type="text" value={values.categoria}/>
       </label>
     
         <div>
@@ -113,7 +133,8 @@ const CadastroLivro = ({setNovoLivro}) => {
         <button type="button" onClick={handleClick} className="btn_fechar">Fechar</button>
         </div>
 
-    </form>
+    </form>)}
+    </Formik>
     </div>
   )
 }
