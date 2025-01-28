@@ -92,8 +92,8 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
         dataCadastro: Yup.date().required("A data é obrigatória"),
 
-        telefone: Yup.string().required("O telefone é obrigatório").min(11, "O telefone deve ter 11 digitos")
-            .max(11, "O telefone deve ter 11 digitos")
+        telefone: Yup.string().required("O telefone é obrigatório").length(11, "O telefone deve ter 11 digitos")
+
     })
 
 
@@ -108,13 +108,13 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
     validationSchema={validationSchema}
     
     >
-    {({ handleSubmit, values }) => (
+    {({ handleSubmit }) => (
       <form className={styles.usuario_form} onSubmit={handleSubmit}>
         <h1>Cadastro de usuário</h1>
         {editar && (
         <label>
             <span>Id</span>
-            <Field type="text" name="id" disabled value={values.id}/>
+            <Field type="text" name="id" disabled/>
         </label>)}
         <label>
             <span>Nome:</span>

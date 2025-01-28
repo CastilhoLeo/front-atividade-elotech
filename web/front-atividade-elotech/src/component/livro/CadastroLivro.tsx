@@ -3,7 +3,7 @@ import { LivroContext } from "../../context/LivroContext"
 import { Livro } from "../../types/Livro"
 import style from "./CadastroLivro.module.css"
 import { cadastroLivro, editarLivro } from "../../service/LivroService"
-import { Field, Formik } from "formik"
+import { ErrorMessage, Field, Formik, FormikHelpers } from "formik"
 import * as Yup from 'yup'
 
 interface Props{
@@ -37,14 +37,13 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
       setAtualizaLista(!atualizaLista)
     }
 
-    const handleSubmit = async (e)=>{
-      e.preventDefault()
+    const handleSubmit = async (values: Livro, actions:FormikHelpers<Livro>)=>{
 
       try{
 
       if(editar){
 
-        const response = await editarLivro(livro)
+        const response = await editarLivro(values)
 
         const json = await response.json();
 
@@ -62,7 +61,7 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
 
       if(response.ok){
         alert("Livro cadastrado com sucesso")
-        setLivro(livroPadrao);
+        actions.resetForm()
       }else{
         alert(json.message)
       }
@@ -80,6 +79,12 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
 
   const validationSchema:Yup.AnySchema = Yup.object({
 
+    titulo: Yup.string().required("O título é obrigatório").min(3, "min 3 caracteres"),
+    autor: Yup.string().required("O autor é obrigatório").min(3, "min 3 caracteres"),
+    isbn: Yup.string().required("O ISBN é obrigatório").length(13, "O isbn deve ter 13 caracteres"),
+    dataPublicacao: Yup.date().required("Data de publicacao é obrigatória"),
+    categoria: Yup.string().required("A categoria é obrigatória")
+
   })
 
   return (
@@ -89,47 +94,58 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
 
     initialValues={initialValues}
 
-    onSubmit={handleSubmit}
+    onSubmit={(values, actions )=>{handleSubmit(values, actions)}}
 
     validationSchema={validationSchema}
+
+  
     >
-      {({handleSubmit, values})=>(
+      {({handleSubmit})=>(
         
     <form className={style.livro_form} onSubmit={handleSubmit}>
       <h1>Cadastro livro</h1>
       {editar && 
       <label>
       <span>Id</span>
-      <Field type="number" value={values.id} disabled/>
+      <Field type="number" name="id" disabled/>
       </label>}
 
       <label>
       <span>Título</span>
-      <Field type="text" value={values.titulo}/>
+      <Field type="text" name="titulo" placeholder="Digite o titulo do livro"/>
+      <ErrorMessage component="div" name="titulo"/>
       </label>
 
       <label>
       <span>Autor</span>
-      <Field type="text" value={values.autor}/>
+      <Field type="text" name="autor" placeholder="Digite o autor do livro"/>
+      <ErrorMessage component="div" name="autor" />
       </label>
 
       <label>
       <span>ISBN</span>
-      <Field type="text" value={values.isbn}/>
+      <Field type="text" name="isbn" placeholder="Digite o ISBN do livro"/>
+      <ErrorMessage component="div" name="isbn" />
       </label>
 
       <label>
       <span>Data de Publicação</span>
-      <Field type="date" value={values.dataPublicacao}/>
+      <Field type="date" name="dataPublicacao"/>
+      <ErrorMessage component="div" name="dataPublicacao"/>
       </label>
 
-      <label>
-      <span>Categoria</span>
-      <Field type="text" value={values.categoria}/>
+    <label>
+      <Field as= "select" name="categoria">
+        <option value="">Selecione a categoria</option>
+        <option value="AVENTURA">Aventura</option>
+        <option value="ROMANCE">Romance</option>
+        <option value="FICCAO">Ficção</option>
+      </Field>
+      <ErrorMessage component="div" name="categoria"/>
       </label>
     
         <div>
-        <button className="btn_salvar">Salvar</button>
+        <button type="submit" className="btn_salvar">Salvar</button>
         <button type="button" onClick={handleClick} className="btn_fechar">Fechar</button>
         </div>
 
