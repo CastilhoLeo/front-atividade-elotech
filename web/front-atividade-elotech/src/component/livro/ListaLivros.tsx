@@ -4,9 +4,18 @@ import { editarLivro, excluirLivro, pesquisaLivro } from "../../service/LivroSer
 import { Livro } from "../../types/Livro"
 import styles from './ListaLivros.module.css'
 
-const ListaLivros = ({setNovoLivro}) => {
+interface Props {
+    setNovoLivro:React.Dispatch<React.SetStateAction<boolean>>
+}
+const ListaLivros = ({setNovoLivro}:Props) => {
 
-    const {pesquisa, dados, setDados, atualizaLista, setAtualizaLista, livro, setLivro, setEditar} = useContext(LivroContext)
+    const context = useContext(LivroContext)
+
+    if(!context){
+        throw new Error("Erro no contexto")
+    }
+
+    const {pesquisa, dados, setDados, atualizaLista, setAtualizaLista, setLivro, setEditar} = context
 
     useEffect(()=>{
 

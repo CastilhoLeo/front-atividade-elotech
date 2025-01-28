@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styles from './ListaUsuarios.module.css'
 import { UsuarioContext } from '../../context/UsuarioContext'
 import { excluirUsuario, pesquisarUsuario } from '../../service/UsuarioService'

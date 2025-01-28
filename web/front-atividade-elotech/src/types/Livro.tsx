@@ -1,9 +1,9 @@
 export type Livro = {
-    id?: number | null,
+    id?: number,
     titulo: String,
     autor: String,
     isbn: string,
-    dataPublicacao: String,
+    dataPublicacao: string,
     categoria: String
 
 }
