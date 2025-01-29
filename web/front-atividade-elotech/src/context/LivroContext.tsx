@@ -11,7 +11,7 @@ const livroContextInicial:LivroContextInicial = {
         id:null,
         titulo: "",
         autor:"",
-        dataPublicacao: new Date(),
+        dataPublicacao: new Date().toLocaleDateString('pt-BR'),
         isbn:"",
         categoria:""
     },

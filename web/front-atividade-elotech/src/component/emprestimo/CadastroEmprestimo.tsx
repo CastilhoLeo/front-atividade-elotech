@@ -4,10 +4,21 @@ import styles from './CadastroEmprestimo.module.css'
 import { RequestEmprestimoDTO } from "../../types/RequestEmprestimoDTO"
 import { cadastrarEmprestimo } from "../../service/EmprestimoService"
 
+interface Props{
 
-const CadastroEmprestimo = ({cadastro, setCadastro}) => {
+  cadastro:boolean,
+  setCadastro:React.Dispatch<React.SetStateAction<boolean>>
+}
 
-  const {atualizaLista, setAtualizaLista} = useContext(EmprestimoContext)
+const CadastroEmprestimo = ({cadastro, setCadastro}:Props) => {
+
+  const context = useContext(EmprestimoContext)
+
+  if(!context){
+    throw new Error("Erro no contexto")
+  }
+
+  const {atualizaLista, setAtualizaLista} = context
 
   const requestPadrao = {
     usuarioId:0,

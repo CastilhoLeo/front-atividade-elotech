@@ -1,6 +1,6 @@
 import { Livro } from "./Livro";
 
-export type LivroContextInicial{
+export type LivroContextInicial = {
         dados: Array<Livro>;
         setDados:(novoState:Array<Livro>)=> void;
         pesquisa: string;

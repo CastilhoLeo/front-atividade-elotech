@@ -1,12 +1,22 @@
 import { createContext, useState } from "react";
+import { EmprestimoContextInicial } from "../types/EmprestimoContextInicial";
 
-export const EmprestimoContext = createContext();
+const emprestimoContextInicial: EmprestimoContextInicial = {
+    dados:[],
+    setDados:()=>{},
+    atualizaLista:false,
+    setAtualizaLista:()=>{},
+    pesquisa:{tipo:"usuario", texto:""},
+    setPesquisa:()=>{}
+}
 
-export const EmprestimoContextProvider = ({children})=>{
+export const EmprestimoContext = createContext <EmprestimoContextInicial | null>(null);
 
-const [dados, setDados] = useState([])
-const [atualizaLista, setAtualizaLista] = useState(false)
-const [pesquisa, setPesquisa] = useState({tipo:"usuario", texto:""})
+export const EmprestimoContextProvider = ({children}:{children: React.ReactNode})=>{
+
+const [dados, setDados] = useState(emprestimoContextInicial.dados)
+const [atualizaLista, setAtualizaLista] = useState(emprestimoContextInicial.atualizaLista)
+const [pesquisa, setPesquisa] = useState(emprestimoContextInicial.pesquisa)
 
     return(
 
