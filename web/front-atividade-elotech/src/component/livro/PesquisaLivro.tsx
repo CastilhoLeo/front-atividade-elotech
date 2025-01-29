@@ -1,25 +1,41 @@
 import { useContext, useState } from 'react'
 import { LivroContext } from '../../context/LivroContext'
 import style from './PesquisaLivro.module.css'
+import { Field, Formik } from 'formik'
 
 const PesquisaLivro = () => {
 
-  const [titulo, setTitulo] = useState("")
-  const {pesquisa, setPesquisa, dados, setDados} = useContext(LivroContext)
+  const context = useContext(LivroContext)
 
-    const handleSubmit = (e)=>{
-        e.preventDefault()
+  if(!context){
+    throw new Error("Erro no contexto")
+  }
+
+  const {setPesquisa} = context
+
+    const handleSubmit = (titulo:string)=>{
         setPesquisa(titulo)
     }
 
   return (
     <>
+    <Formik 
+
+  initialValues={{titulo:""}}
+
+  onSubmit={(values)=>{handleSubmit(values.titulo)}}
+
+>
+  {({handleSubmit})=>(
+
     <form className={style.input_pesquisa} onSubmit={handleSubmit}>
       <label>
-        <input type="text" name="titulo" placeholder="Digite o título do livro" onChange={(e)=>setTitulo(e.target.value)}/>
+        <Field type="text" name="titulo" placeholder="Digite o título do livro"/>
       </label>
       <button type='submit'>Pesquisar</button>
     </form>
+  )}
+    </Formik>
     </>
   )
 }
