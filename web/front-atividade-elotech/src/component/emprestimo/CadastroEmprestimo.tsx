@@ -1,8 +1,10 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { EmprestimoContext } from "../../context/EmprestimoContext"
 import styles from './CadastroEmprestimo.module.css'
 import { RequestEmprestimoDTO } from "../../types/RequestEmprestimoDTO"
 import { cadastrarEmprestimo } from "../../service/EmprestimoService"
+import { ErrorMessage, Field, Formik, FormikHelpers } from "formik"
+import * as Yup from 'yup'
 
 interface Props{
 
@@ -26,53 +28,64 @@ const CadastroEmprestimo = ({cadastro, setCadastro}:Props) => {
     dataEmprestimo:new Date}
 
 
-  const [requestEmprestimoDTO, setRequestEmprestimoDTO] = useState<RequestEmprestimoDTO>(requestPadrao)
-
-
   const handleClick = ()=>{
     setCadastro(!cadastro)
   }
-
-  const handleChange = (campo, valor)=>{
-    setRequestEmprestimoDTO((prevRequestEmprestimoDTO)=>({
-      ...prevRequestEmprestimoDTO,
-      [campo]:valor
-    }))
-
     
-  }
 
 
-  const handleSubmit = (e)=>{
-    e.preventDefault()
+  const handleSubmit = async (values:RequestEmprestimoDTO, actions:FormikHelpers<RequestEmprestimoDTO>)=>{
 
-    cadastrarEmprestimo(requestEmprestimoDTO)
+    cadastrarEmprestimo(values)
 
     setAtualizaLista(!atualizaLista)
-    
-    setRequestEmprestimoDTO(requestPadrao)
+
+    actions.resetForm()
     
   }
 
+  const validationSchema:Yup.AnySchema = Yup.object({
+
+    usuarioId : Yup.number().required("O ID do usuário é obrigatório"),
+    livroId : Yup.number().required("O ID do livro é obrigatório"),
+    dataEmprestimo : Yup.date().required("A data é obrigatória")
+
+  })
+
   return (
-    <div className={styles.cadastro_emprestimo} onSubmit={handleSubmit}>
-      <form className={styles.emprestimo_form}>
+    <div className={styles.cadastro_emprestimo} >
+      
+      <Formik
+      
+      initialValues={requestPadrao}
+
+      onSubmit={(values, actions)=>{handleSubmit(values, actions)}}
+
+      validationSchema={validationSchema}
+      >
+
+        {({handleSubmit})=>(   
+        
+      <form className={styles.emprestimo_form} onSubmit={handleSubmit}>
 
         <h1>Cadastro Empréstimo</h1>
 
         <label>
           <span>Usuário ID</span>
-          <input type="number" onChange={(e)=>handleChange("usuarioId", e.target.value)} />
+          <Field type="number" name="usuarioId" />
+          <ErrorMessage component="div" name="usuarioId"/>
         </label>
         
         <label>
         <span>Livro ID</span>
-        <input type="number" onChange={(e)=>handleChange("livroId", e.target.value)} />
+        <Field type="number" name="livroId"/>
+        <ErrorMessage component="div" name="livroId"/>
         </label>
 
         <label> 
         <span>Data Emprestimo</span>
-        <input type="date" onChange={(e)=>handleChange("dataEmprestimo", e.target.value)}/>
+        <Field type="date" name="dataEmprestimo"/>
+        <ErrorMessage component="div" name="dataEmprestimo"/>
         </label>
 
         <div>
@@ -80,8 +93,12 @@ const CadastroEmprestimo = ({cadastro, setCadastro}:Props) => {
           <button className="btn_fechar" type="button" onClick={handleClick}>Fechar</button>
         </div>
       </form>
+        )}
+      </Formik>
     </div>
-  )
-}
+    )
+
+        }
+
 
 export default CadastroEmprestimo

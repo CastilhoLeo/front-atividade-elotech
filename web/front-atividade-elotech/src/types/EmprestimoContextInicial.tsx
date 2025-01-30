@@ -9,5 +9,5 @@ export type EmprestimoContextInicial = {
         tipo:string,
         texto:string
     };
-    setPesquisa: (novoState:{tipo:string, texto:string})=>{tipo:string, texto:string}
+    setPesquisa: (novoState:{tipo:string, texto:string})=>void
 }
