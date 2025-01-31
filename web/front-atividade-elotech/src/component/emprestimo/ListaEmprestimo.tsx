@@ -3,11 +3,19 @@ import { EmprestimoContext } from "../../context/EmprestimoContext"
 import { devolverEmprestimo, pesquisarEmprestimo } from "../../service/EmprestimoService"
 import { Emprestimo } from "../../types/Emprestimo"
 import styles from './ListaEmprestimo.module.css'
+import { Field, Formik } from "formik"
 
 
-const ListaEmprestimo = ({cadastro, setCadastro})=>{
 
-    const {dados, setDados, atualizaLista, setAtualizaLista, pesquisa, setPesquisa} = useContext(EmprestimoContext)
+const ListaEmprestimo = ()=>{
+
+    const context = useContext(EmprestimoContext)
+
+    if(!context){
+        throw new Error("Erro no contexto")
+    }
+
+    const {dados, setDados, atualizaLista, setAtualizaLista, pesquisa} = context
 
     const[devolucao, setDevolucao] = useState(false)
     const[requestDevolucao, setRequestDevolucao] = useState({
@@ -40,16 +48,9 @@ const ListaEmprestimo = ({cadastro, setCadastro})=>{
         
     }
 
-    const handleChange = (dataDevolucao:Date)=>{
-        setRequestDevolucao((prevRequestDevolucao)=>({
-            ...prevRequestDevolucao,
-            dataDevolucao:dataDevolucao
-        }))
-    }
 
-    const handleSubmit = async (e)=>{
+    const handleSubmit = async ()=>{
 
-        e.preventDefault()
 
         await devolverEmprestimo(requestDevolucao)
 
@@ -61,6 +62,7 @@ const ListaEmprestimo = ({cadastro, setCadastro})=>{
     const handleCancelarDevolucao = ()=>{
         setDevolucao(!devolucao)
     }
+
 
     return(
 
@@ -94,22 +96,32 @@ const ListaEmprestimo = ({cadastro, setCadastro})=>{
 
             {devolucao &&         
                 <div className={styles.devolucao}>
+
+                <Formik 
+                
+                initialValues={
+                    requestDevolucao
+                }
+                
+                onSubmit={handleSubmit}
+                >
                     
                     <form onSubmit={handleSubmit} className={styles.devolucao_form}>
                         <h1>Devolução</h1>
                         <label>
                             <span>Emprestimo ID</span>
-                            <input type="number" value={requestDevolucao.id} disabled/>
+                            <Field type="number" name="emprestimoId" value={requestDevolucao.id} disabled/>
                         </label>
                         <label>
                             <span>Data Devolução</span>
-                            <input type="date" onChange={(e)=>handleChange( e.target.value)}/>
+                            <Field type="date" name="dataDevolucao"/>
                         </label>
                         <div>
                             <button className="btn_salvar">Confirmar</button>
                             <button className="btn_fechar" onClick={handleCancelarDevolucao}>Cancelar</button>
                         </div>
                     </form>
+                </Formik>
                 </div>}
                 
             </tbody>

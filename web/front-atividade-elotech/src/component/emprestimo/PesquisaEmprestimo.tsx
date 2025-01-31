@@ -2,49 +2,62 @@ import { useContext, useState } from 'react'
 import style from './PesquisaEmprestimo.module.css'
 import { EmprestimoContext } from '../../context/EmprestimoContext'
 import { pesquisarEmprestimo } from '../../service/EmprestimoService'
+import { Field, Formik, FormikHelpers } from 'formik'
+import { RequestEmprestimoDTO } from '../../types/RequestEmprestimoDTO'
 
 
 const PesquisaEmprestimo = () => {
 
- 
-  const {dados, setDados, atualizaLista, setAtualizaLista, pesquisa, setPesquisa} = useContext(EmprestimoContext)
+  const context = useContext(EmprestimoContext)
 
-  const handleSubmit = async (e)=>{
-    e.preventDefault()
+ if(!context){
+  throw new Error("Erro no context")
+ }
 
-    const res = await pesquisarEmprestimo(pesquisa.tipo, pesquisa.texto)
+  const {setDados, atualizaLista, setAtualizaLista} = context
+
+
+  const handleSubmit = async (values:any)=>{
+
+    const res = await pesquisarEmprestimo(values.tipo, values.texto)
 
     setDados(res.content)
 
     setAtualizaLista(!atualizaLista)
 
-
   }
 
-  const handleChange = (campo, valor)=>{
 
-    setPesquisa((prevPesquisa)=>({
-      ...prevPesquisa,
-      [campo]:valor
-    })) 
-
-  }
   
   return (
     <> 
+    <Formik
+    initialValues={{
+      campoPesquisa:"usuario",
+      texto:""
+
+    }}
+
+    onSubmit={(values)=>{handleSubmit(values)}}
+    >
+
+    {({handleSubmit})=>(
+
         <form className={style.input_pesquisa} onSubmit={handleSubmit}>
-            <select name="campoPesquisa" onChange={(e)=>handleChange("tipo", e.target.value)}>
+            <Field as="select" name="campoPesquisa">
                  <option value="usuario">Usuario</option>
                 <option value="titulo">Titulo</option>
-            </select>
+            </Field>
 
         <label>
-            <input type="text" placeholder="Digite a pesquisa..." onChange={(e)=>handleChange("texto", e.target.value)}/>
+            <Field type="text" placeholder="Digite a pesquisa..." name="texto"/>
         </label>
 
-        <button>Pesquisar</button>
+        <button type="submit">Pesquisar</button>
         
       </form>
+      )}
+      </Formik>
     </>
   )
 }
