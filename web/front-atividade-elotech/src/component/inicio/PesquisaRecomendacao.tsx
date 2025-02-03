@@ -1,27 +1,41 @@
-import React, { useState } from 'react'
 import { GeraRecomendacoes } from '../../service/RecomendacaoService'
+import { Livro } from '../../types/Livro'
 import styles from './PesquisaRecomendacao.module.css'
-const PesquisaRecomendacao = ({recomendacoes, setRecomendacoes}) => {
+import { Field, Formik } from 'formik'
 
-    const [usuarioId, setUsuarioId] = useState("")
+interface Props {
+    setRecomendacoes:React.Dispatch<React.SetStateAction<Array<Livro>>>
+}
 
-    const handleSubmit =  async (e)=>{
-        e.preventDefault()
+const PesquisaRecomendacao = ({setRecomendacoes}:Props) => {
 
-        const dados = await GeraRecomendacoes(usuarioId)
+
+    const handleSubmit =  async (values:any)=>{
+
+        const dados = await GeraRecomendacoes(values.usuarioId)
 
         setRecomendacoes(dados)
     }
 
   return (
     <>
+    <Formik
+    initialValues={{usuarioId:0}}
+
+    onSubmit={handleSubmit}
+    >
+        {({handleSubmit})=>(
+       
         <form onSubmit={handleSubmit} className={styles.input_recomendacao}>
             <label>
                 <span>Usuario ID: </span>
-                <input type="number" onChange={(e)=>setUsuarioId(e.target.value)} />
+                <Field type="number" name='usuarioId' />
             </label>
             <button>Gerar</button>
         </form>
+         )}
+
+    </Formik>
     </>
   )
 }

@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import { Livro } from "../../types/Livro"
 
-const ListaRecomendacao = ({recomendacoes, setRecomendacoes}) => {
+interface Props {
+    recomendacoes:Array<Livro>,
+}
+
+const ListaRecomendacao = ({recomendacoes}:Props) => {
 
    
   return (

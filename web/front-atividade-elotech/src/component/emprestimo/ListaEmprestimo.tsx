@@ -35,7 +35,7 @@ const ListaEmprestimo = ()=>{
         fetchEmprestimo()
         
 
-    },[atualizaLista])
+    },[pesquisa, atualizaLista])
 
 
     const handleDevolucao = (id:number)=>{

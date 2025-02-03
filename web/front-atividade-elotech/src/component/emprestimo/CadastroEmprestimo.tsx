@@ -30,6 +30,7 @@ const CadastroEmprestimo = ({cadastro, setCadastro}:Props) => {
 
   const handleClick = ()=>{
     setCadastro(!cadastro)
+    setAtualizaLista(!atualizaLista)
   }
     
 

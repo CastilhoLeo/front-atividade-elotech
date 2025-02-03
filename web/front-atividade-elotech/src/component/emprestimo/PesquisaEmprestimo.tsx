@@ -1,9 +1,7 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import style from './PesquisaEmprestimo.module.css'
 import { EmprestimoContext } from '../../context/EmprestimoContext'
-import { pesquisarEmprestimo } from '../../service/EmprestimoService'
-import { Field, Formik, FormikHelpers } from 'formik'
-import { RequestEmprestimoDTO } from '../../types/RequestEmprestimoDTO'
+import { Field, Formik } from 'formik'
 
 
 const PesquisaEmprestimo = () => {
@@ -14,26 +12,21 @@ const PesquisaEmprestimo = () => {
   throw new Error("Erro no context")
  }
 
-  const {setDados, atualizaLista, setAtualizaLista} = context
+  const { setPesquisa } = context
 
 
   const handleSubmit = async (values:any)=>{
 
-    const res = await pesquisarEmprestimo(values.tipo, values.texto)
-
-    setDados(res.content)
-
-    setAtualizaLista(!atualizaLista)
+    setPesquisa(values)
 
   }
-
 
   
   return (
     <> 
     <Formik
     initialValues={{
-      campoPesquisa:"usuario",
+      tipo:"usuario",
       texto:""
 
     }}
@@ -44,7 +37,7 @@ const PesquisaEmprestimo = () => {
     {({handleSubmit})=>(
 
         <form className={style.input_pesquisa} onSubmit={handleSubmit}>
-            <Field as="select" name="campoPesquisa">
+            <Field as="select" name="tipo">
                  <option value="usuario">Usuario</option>
                 <option value="titulo">Titulo</option>
             </Field>
