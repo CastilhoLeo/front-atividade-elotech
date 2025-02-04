@@ -1,8 +1,9 @@
+import axios from "axios"
 import { RequestEmprestimoDTO } from "../types/RequestEmprestimoDTO"
 
 const urlBase = `http://localhost:8080/emprestimo`
 
-export const pesquisarEmprestimo = async (tipo, texto)=>{
+export const pesquisarEmprestimo = async (tipo:string, texto:string)=>{
 
     const response = await fetch(`${urlBase}?${tipo}=${texto}`)
 
@@ -11,12 +12,8 @@ export const pesquisarEmprestimo = async (tipo, texto)=>{
 
 export const cadastrarEmprestimo = async (requestEmprestimoDTO:RequestEmprestimoDTO)=>{
 
-    const response = await fetch(urlBase,({
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify(requestEmprestimoDTO)
-    }))
-
+    const response = await axios.post(urlBase,requestEmprestimoDTO)
+    
     return response
 
 }

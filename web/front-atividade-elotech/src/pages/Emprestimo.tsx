@@ -18,7 +18,7 @@ const Emprestimo = () => {
       <button onClick={()=>setCadastro(!cadastro)}>Novo Empréstimo</button>
       {cadastro && <CadastroEmprestimo setCadastro={setCadastro} cadastro={cadastro}/>}
     </div>
-    <ListaEmprestimo setCadastro={setCadastro} cadastro={cadastro}/>
+    <ListaEmprestimo/>
     </div>
     </EmprestimoContextProvider>
   )

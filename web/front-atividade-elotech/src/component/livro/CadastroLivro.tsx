@@ -55,7 +55,7 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
 
       }else{
       
-      const response = await cadastroLivro(livro)
+      const response = await cadastroLivro(values)
 
       const json = await response.json();
 

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Livro } from "../types/Livro"
 
 const urlBase:String = `http://localhost:8080/livro`
@@ -13,10 +14,7 @@ export const pesquisaLivro = async (pesquisa)=>{
 
 export const cadastroLivro = async (livro:Livro)=>{
 
-    const response = await fetch(`${urlBase}`,
-         {method:"POST",
-         headers:{"Content-Type":"application/json"},
-         body: JSON.stringify(livro)})
+    const response = await axios.post(`${urlBase}`,livro)
 
     return response;
 }
