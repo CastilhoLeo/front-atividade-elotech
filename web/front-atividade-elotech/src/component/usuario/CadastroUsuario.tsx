@@ -51,12 +51,10 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
             const response = await editarUsuario(usuario)
 
-            const json = await response.json()
-
-            if(response.ok){
+            if(response.status === 200){
                 alert("usuario editado com sucesso")
             }else{
-                alert(json.message)
+                alert(response.data.message)
             }
 
 
@@ -64,13 +62,10 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
             const response = await cadastrarUsuario(usuario)
 
-            const json = await response.json()
-
-            if(response.ok){
-                alert("usuario cadastrado com sucesso")
-                actions.resetForm()
+            if(response.status === 200){
+                alert("usuario editado com sucesso")
             }else{
-                alert(json.message)
+                alert(response.data.message)
             }
 
         }

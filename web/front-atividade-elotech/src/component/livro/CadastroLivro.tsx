@@ -47,10 +47,10 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
 
         const json = await response.json();
 
-        if(response.ok){
-          alert("Livro editado com sucesso!")
+        if(response.status === 200){
+          alert("usuario editado com sucesso")
         }else{
-          alert(json.message)
+          alert(response.data.message)
         }
 
       }else{
@@ -59,11 +59,10 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
 
       const json = await response.json();
 
-      if(response.ok){
-        alert("Livro cadastrado com sucesso")
-        actions.resetForm()
+      if(response.status === 200){
+        alert("usuario editado com sucesso")
       }else{
-        alert(json.message)
+        alert(response.data.message)
       }
 
       }

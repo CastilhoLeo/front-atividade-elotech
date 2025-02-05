@@ -23,7 +23,7 @@ const ListaLivros = ({setNovoLivro}:Props) => {
 
         const res = await pesquisaLivro(pesquisa)
 
-        setDados(res)
+        setDados(res.data)
 
     }
 

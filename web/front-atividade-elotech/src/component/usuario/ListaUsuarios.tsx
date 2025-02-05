@@ -24,9 +24,9 @@ const ListaUsuarios = ({setNovoUsuario}:Props) => {
 
   const fetchUsuario = async ()=>{
 
-    const json = await pesquisarUsuario(pesquisa)
+    const response = await pesquisarUsuario(pesquisa)
 
-    setDados(json);
+    setDados(response.data);
   }
 
   fetchUsuario()

@@ -14,7 +14,7 @@ const PesquisaRecomendacao = ({setRecomendacoes}:Props) => {
 
         const dados = await GeraRecomendacoes(values.usuarioId)
 
-        setRecomendacoes(dados)
+        setRecomendacoes(dados.data)
     }
 
   return (

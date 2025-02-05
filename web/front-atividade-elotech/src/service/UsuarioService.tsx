@@ -1,3 +1,4 @@
+import axios from "axios"
 import { Usuario } from "../types/Usuario"
 
 const urlBase:String = "http://localhost:8080/usuario"
@@ -5,12 +6,9 @@ const urlBase:String = "http://localhost:8080/usuario"
 export const pesquisarUsuario = async (pesquisa: String)=>{
 
 
-    const response = await fetch(`${urlBase}?nome=${pesquisa}`)
+    const response = await axios.get(`${urlBase}?nome=${pesquisa}`)
 
-    const json = await response.json()
-
-    return json
-    
+    return response
     
 }
 
@@ -18,7 +16,7 @@ export const pesquisarUsuario = async (pesquisa: String)=>{
 export const excluirUsuario = async (id: number)=>{
    
 
-    const response = await fetch(`${urlBase}/${id}`,{method:"DELETE"} )
+    const response = await axios.delete(`${urlBase}/${id}`,{method:"DELETE"} )
 
     return response
 } 
@@ -26,10 +24,7 @@ export const excluirUsuario = async (id: number)=>{
 export const  editarUsuario = async (usuario: Usuario)=>{
 
  
-    const response = await fetch(`${urlBase}/${usuario.id}`, 
-    {method:"PUT",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify(usuario)})
+    const response = await axios.put(`${urlBase}/${usuario.id}`, usuario)
 
     return response
 
@@ -38,10 +33,7 @@ export const  editarUsuario = async (usuario: Usuario)=>{
 export const cadastrarUsuario = async (usuario: Usuario)=>{
 
 
-     const response = await fetch(`${urlBase}`, 
-        {method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify(usuario)})
+     const response = await axios.post(`${urlBase}`, usuario)
 
     return response
 

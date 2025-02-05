@@ -29,7 +29,7 @@ const ListaEmprestimo = ()=>{
 
             const res = await pesquisarEmprestimo(pesquisa.tipo, pesquisa.texto)
 
-            setDados(res.content)
+            setDados(res.data.content)
         }
 
         fetchEmprestimo()

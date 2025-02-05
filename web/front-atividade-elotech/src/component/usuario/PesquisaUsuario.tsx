@@ -1,4 +1,4 @@
-import { ReactEventHandler, useContext, useState } from "react"
+import {  useContext } from "react"
 import { UsuarioContext } from "../../context/UsuarioContext"
 import styles from "./PesquisaUsuario.module.css"
 import { Field, Formik } from "formik"

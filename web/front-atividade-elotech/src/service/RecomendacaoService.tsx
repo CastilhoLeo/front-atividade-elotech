@@ -1,11 +1,11 @@
+import axios from "axios"
+
 const urlBase = `http://localhost:8080/recomendacao`
 
-export const GeraRecomendacoes = async (usuarioId)=>{
+export const GeraRecomendacoes = async (usuarioId:number)=>{
 
-    const response = await fetch(`${urlBase}/${usuarioId}`)
+    const response = await axios.get(`${urlBase}/${usuarioId}`)
 
-    const json = await response.json()
-
-    return json
+    return response
 
 }

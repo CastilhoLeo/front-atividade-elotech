@@ -5,9 +5,9 @@ const urlBase = `http://localhost:8080/emprestimo`
 
 export const pesquisarEmprestimo = async (tipo:string, texto:string)=>{
 
-    const response = await fetch(`${urlBase}?${tipo}=${texto}`)
+    const response = await axios.get(`${urlBase}?${tipo}=${texto}`)
 
-    return  await response.json()
+    return response
 }
 
 export const cadastrarEmprestimo = async (requestEmprestimoDTO:RequestEmprestimoDTO)=>{
@@ -18,13 +18,9 @@ export const cadastrarEmprestimo = async (requestEmprestimoDTO:RequestEmprestimo
 
 }
 
-export const devolverEmprestimo = async(requestDevolucao)=>{
+export const devolverEmprestimo = async(requestDevolucao:any)=>{
 
-    const response = await fetch(`${urlBase}/${requestDevolucao.id}`,({
-        method:"PUT",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify(requestDevolucao.dataDevolucao)
-    }))
+    const response = await axios.put(`${urlBase}/${requestDevolucao.id}`,requestDevolucao.dataDevolucao)
 
     return response
 }

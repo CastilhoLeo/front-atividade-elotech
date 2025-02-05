@@ -3,13 +3,11 @@ import { Livro } from "../types/Livro"
 
 const urlBase:String = `http://localhost:8080/livro`
 
-export const pesquisaLivro = async (pesquisa)=>{
+export const pesquisaLivro = async (pesquisa:string)=>{
 
-    const response = await fetch (`${urlBase}?titulo=${pesquisa}`)
+    const response = await axios.get(`${urlBase}?titulo=${pesquisa}`)
 
-    const json = await response.json();
-
-    return json;
+    return response;
 }
 
 export const cadastroLivro = async (livro:Livro)=>{
@@ -21,18 +19,14 @@ export const cadastroLivro = async (livro:Livro)=>{
 
 export const editarLivro = async (livro:Livro)=>{
 
-    const response = await fetch(`${urlBase}/${livro.id}`,
-         {method:"PUT",
-         headers:{"Content-Type":"application/json"},
-         body: JSON.stringify(livro)})
+    const response = await axios.put(`${urlBase}/${livro.id}`, livro)
 
     return response;
 }
 
 export const excluirLivro = async (id:number)=>{
 
-    const response = await fetch(`${urlBase}/${id}`,
-         {method:"DELETE"})
+    const response = await axios.delete(`${urlBase}/${id}`)
 
     return response;
 }
