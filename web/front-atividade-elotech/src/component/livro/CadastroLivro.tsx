@@ -45,30 +45,33 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
 
         const response = await editarLivro(values)
 
-        const json = await response.json();
-
         if(response.status === 200){
+
           alert("usuario editado com sucesso")
+
+
         }else{
+
           alert(response.data.message)
+
         }
 
       }else{
       
       const response = await cadastroLivro(values)
 
-      const json = await response.json();
-
       if(response.status === 200){
+
         alert("usuario editado com sucesso")
-      }else{
-        alert(response.data.message)
+
+        actions.resetForm()
+
       }
 
       }
     }catch(error:any){
 
-      alert(error.message)
+      alert(error.response.data.message)
 
     }
 

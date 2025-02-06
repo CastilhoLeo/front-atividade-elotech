@@ -52,8 +52,11 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
             const response = await editarUsuario(usuario)
 
             if(response.status === 200){
+
                 alert("usuario editado com sucesso")
+
             }else{
+
                 alert(response.data.message)
             }
 
@@ -63,16 +66,19 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
             const response = await cadastrarUsuario(usuario)
 
             if(response.status === 200){
+
                 alert("usuario editado com sucesso")
-            }else{
-                alert(response.data.message)
+                
+                actions.resetForm()
+
             }
 
         }
 
     }catch(error: any){
-        setErro(error.message)
-        }
+        
+        alert(error.response.data.message)
+    }
 
     }
 

@@ -3,7 +3,7 @@ import { Usuario } from "./Usuario"
 
 
 export type Emprestimo = {
-    id?: number | null,
+    id: number,
     usuarioDTO: Usuario,
     livroDTO: Livro,
     dataEmprestimo: Date,

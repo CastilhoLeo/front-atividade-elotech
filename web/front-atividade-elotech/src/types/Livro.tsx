@@ -1,5 +1,5 @@
 export type Livro = {
-    id?: number,
+    id: number,
     titulo: String,
     autor: String,
     isbn: string,

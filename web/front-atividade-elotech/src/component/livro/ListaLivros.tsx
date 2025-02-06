@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react"
 import { LivroContext } from "../../context/LivroContext"
-import { editarLivro, excluirLivro, pesquisaLivro } from "../../service/LivroService"
+import { excluirLivro, pesquisaLivro } from "../../service/LivroService"
 import { Livro } from "../../types/Livro"
 import styles from './ListaLivros.module.css'
 

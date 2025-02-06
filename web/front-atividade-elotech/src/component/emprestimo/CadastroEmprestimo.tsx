@@ -37,11 +37,24 @@ const CadastroEmprestimo = ({cadastro, setCadastro}:Props) => {
 
   const handleSubmit = async (values:RequestEmprestimoDTO, actions:FormikHelpers<RequestEmprestimoDTO>)=>{
 
-    cadastrarEmprestimo(values)
+    try{
+
+    const response = await cadastrarEmprestimo(values)
+
+    if(response.status === 200){
+
+      alert("Empréstimo cadastrado com sucesso!")
 
     setAtualizaLista(!atualizaLista)
 
     actions.resetForm()
+    }
+
+    } catch(error:any){
+
+      alert(error.response.data.message)
+
+    }
     
   }
 
