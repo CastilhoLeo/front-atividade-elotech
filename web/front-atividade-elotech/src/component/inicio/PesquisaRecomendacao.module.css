@@ -1,6 +1,20 @@
+.recomendacoes{
+    display: flex;
+    justify-content: center; 
+    align-items: center;  
+    height: 3em;
+
+}
+
 .input_recomendacao input{
     height: 3em;
     border-radius: 1em;
-    width: 7em;
+    width: 30em;
     text-align: center;
+}
+
+
+.input_recomendacao{
+    display: flex;
+    flex-direction: row;
 }

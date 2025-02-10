@@ -10,8 +10,8 @@ const Inicio = () => {
   return (
     <div className={styles.recomendacao}>
       <h1>Gerar recomendações para o usuário</h1>
-      <PesquisaRecomendacao recomendacoes={recomendacoes} setRecomendacoes={setRecomendacoes}/>
-      <ListaRecomendacao recomendacoes={recomendacoes} setRecomendacoes={setRecomendacoes}/>
+      <PesquisaRecomendacao  setRecomendacoes={setRecomendacoes}/>
+      <ListaRecomendacao recomendacoes={recomendacoes}/>
     </div>
   )
 }

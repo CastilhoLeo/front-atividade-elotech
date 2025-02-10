@@ -1,22 +1,26 @@
 import { Usuario } from "../../types/Usuario"
+import styles from './BuscaUsuario.module.css'
 
 interface Props{
 
-    listaUsuarios:Array<Usuario>
+    listaUsuarios:Array<Usuario>,
+    setUsuarioSelecionado:React.Dispatch<React.SetStateAction<Usuario>>
 }
 
-const BuscaUsuario = ({listaUsuarios}:Props)=>{
+const BuscaUsuario = ({listaUsuarios, setUsuarioSelecionado}:Props)=>{
 
     return (
 
-       <>
-       {listaUsuarios.slice(0,3).map((usuario)=>(
+       <div className={styles.busca_usuario}>
+       
         <ul>
-            <li>{usuario.nome}</li>
+            {listaUsuarios.slice(0,3).map((usuario)=>(
+            <li key={usuario.id} onClick={()=>setUsuarioSelecionado(usuario)}> {usuario.nome}</li>
+            ))}
         </ul>
 
-       ))}
-       </>
+       
+       </div>
 
     )
 }

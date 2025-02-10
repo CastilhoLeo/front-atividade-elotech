@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
-import { GeraRecomendacoes } from '../../service/RecomendacaoService'
 import { pesquisarUsuario } from '../../service/UsuarioService'
 import { Livro } from '../../types/Livro'
 import BuscaUsuario from '../global/BuscaUsuario'
 import styles from './PesquisaRecomendacao.module.css'
-import { Field, Formik } from 'formik'
 import { Usuario } from '../../types/Usuario'
-import Usuario from '../../pages/Usuario'
+import { GeraRecomendacoes } from '../../service/RecomendacaoService'
 
 interface Props {
     setRecomendacoes:React.Dispatch<React.SetStateAction<Array<Livro>>>
@@ -16,14 +14,24 @@ const PesquisaRecomendacao = ({setRecomendacoes}:Props) => {
 
     const [nomeUsuario, setNomeUsuario] = useState("")
     const [listaUsuarios, setListaUsuarios] = useState<Array<Usuario>>([])
+    const [usuarioSelecionado, setUsuarioSelecionado] = useState<Usuario>()
 
 
-    const handleSubmit =  async (values:any)=>{
+    useEffect(()=>{
 
-        const dados = await GeraRecomendacoes(values.usuarioId)
+        const recomendacao =  async (usuario:Usuario)=>{
+
+        const dados = await GeraRecomendacoes(usuario.id)
 
         setRecomendacoes(dados.data)
     }
+
+    if(usuarioSelecionado)
+
+    recomendacao(usuarioSelecionado)
+
+    },[usuarioSelecionado])
+    
 
 
     const handleChange = (values:string)=>{
@@ -34,16 +42,22 @@ const PesquisaRecomendacao = ({setRecomendacoes}:Props) => {
 
     useEffect(()=>{
 
-        if(nomeUsuario!==""){
+        {
         const buscarUsuarios = async (nomeUsuario:string)=>{
         
             const usuarios = await  pesquisarUsuario(nomeUsuario)
 
+            if(nomeUsuario.length >=3){
+
             setListaUsuarios(usuarios.data)
+            } else {
+                setListaUsuarios([])
+            }
     
         }
 
         buscarUsuarios(nomeUsuario)
+
     }
 
     },[nomeUsuario])
@@ -51,26 +65,15 @@ const PesquisaRecomendacao = ({setRecomendacoes}:Props) => {
 
   return (
     <>
-    <Formik
-    initialValues={{nomeUsuario:""}}
-
-    onSubmit={handleSubmit}
-
-
-    >
-        {({handleSubmit})=>(
+    <div className={styles.recomendacoes}>
        
-        <form onSubmit={handleSubmit} className={styles.input_recomendacao}>
-            <label>
-                <span>Nome Usuario: </span>
-                <Field type="text" name='nomeUsuario'  onChange={(e)=>{handleChange(e.target.value)}} value={nomeUsuario}/>
-                <BuscaUsuario listaUsuarios={listaUsuarios}/>
-            </label>
-            <button>Gerar</button>
-        </form>
-         )}
+        <label>
+            <span>Nome Usuario: </span>
+            <input type="text" name='nomeUsuario'  onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{handleChange(e.target.value)}} value={nomeUsuario}/>
+        </label>
 
-    </Formik>
+    </div>
+    <BuscaUsuario listaUsuarios={listaUsuarios} setUsuarioSelecionado={setUsuarioSelecionado}/>
     </>
   )
 }
