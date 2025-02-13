@@ -18,7 +18,6 @@ const BuscaUsuario = ({listaUsuarios, setUsuarioSelecionado}:Props)=>{
             <li key={usuario.id} onClick={()=>setUsuarioSelecionado(usuario)}> {usuario.nome}</li>
             ))}
         </ul>
-
        
        </div>
 
