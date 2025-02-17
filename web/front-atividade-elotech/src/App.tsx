@@ -1,5 +1,5 @@
 import './App.css'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { Routes, Route} from 'react-router-dom'
 
 import NavBar from './component/global/NavBar'
 import Sobre from './pages/Sobre'
@@ -16,7 +16,6 @@ function App() {
   return (
 
    <div className='App'>
-    <BrowserRouter>
     <NavBar/>
     <h1>Biblioteca Elotech</h1>
     <Routes>
@@ -26,7 +25,6 @@ function App() {
       <Route path = "/livros" element={<Livro/>}/>
       <Route path = "/emprestimos" element={<Emprestimo/>}/>
     </Routes>
-    </BrowserRouter>
    </div>
 
   )

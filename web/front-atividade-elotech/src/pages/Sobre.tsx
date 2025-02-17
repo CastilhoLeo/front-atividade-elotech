@@ -1,7 +1,7 @@
 const Sobre = () => {
   return (
     <div>
-      Sobre
+      Sobre o projeto
     </div>
   )
 }
