@@ -1,4 +1,4 @@
-import {  render, screen } from "@testing-library/react"
+import {  fireEvent, render, screen } from "@testing-library/react"
 import CadastroUsuario from "../CadastroUsuario"
 import { UsuarioContext, UsuarioContextProvider } from "../../../context/UsuarioContext"
 
@@ -21,14 +21,11 @@ const mockedContext = {
 describe("CadastroUsuario", ()=>{
     it("Deve renderizar o component corretamente",()=>{
 
-        const setNovoUsuario = jest.fn()
-
-
         render(
            
             <UsuarioContextProvider>
 
-                <CadastroUsuario setNovoUsuario={setNovoUsuario}/>
+                <CadastroUsuario setNovoUsuario={jest.fn()}/>
 
             </UsuarioContextProvider>
 
@@ -68,4 +65,21 @@ describe("CadastroUsuario", ()=>{
 
         expect(screen.getByPlaceholderText("Digite o nome do usuário")).toHaveValue("Leonardo");
     });
+
+    it("Deve chamar as funções corretas ao editar", () => {
+
+      const mockedContextAjustado = {...mockedContext,
+           editar:true,
+           usuario: {...mockedContext.usuario, nome:"Leonardo"}}
+    
+      render(
+        <UsuarioContext.Provider value={mockedContextAjustado}>
+          <CadastroUsuario setNovoUsuario={jest.fn()} />
+        </UsuarioContext.Provider>
+      );
+    
+      fireEvent.click(screen.getByRole("button", {name: "Enviar"}))
+
+      
+  });
 })

@@ -4,11 +4,13 @@ import '@testing-library/jest-dom';
 
 
 describe("Usuario", ()=>{
-    it("Deve rendereza o page Usuario corretamente",()=>{
+
+    it("Deve rendereza o page Usuario corretamente",()=>{      
+
         render(
             <Usuario/>
         )
-
+ 
         expect(screen.getByRole("button", {name:"Novo Usuario"})).toBeInTheDocument()
 
         expect(screen.getByPlaceholderText("Digite o nome do usuário")).toBeInTheDocument()

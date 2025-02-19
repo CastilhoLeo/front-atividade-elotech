@@ -46,7 +46,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
         try{
 
-            
+        
         if(editar){
 
             const response = await editarUsuario(usuario)
