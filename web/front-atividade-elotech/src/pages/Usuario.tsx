@@ -2,7 +2,7 @@ import CadastroUsuario from '../component/usuario/CadastroUsuario'
 import styles from './Usuario.module.css'
 import ListaUsuarios from '../component/usuario/ListaUsuarios'
 import PesquisaUsuario from '../component/usuario/PesquisaUsuario'
-import { UsuarioContextProvider } from '../context/UsuarioContext'
+import {  UsuarioContextProvider } from '../context/UsuarioContext'
 import { useState } from 'react'
 
 
