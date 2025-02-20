@@ -1,7 +1,8 @@
-import {  act, fireEvent, render, screen, waitFor } from "@testing-library/react"
+import {  act, fireEvent, getByRole, render, screen, waitFor } from "@testing-library/react"
 import CadastroUsuario from "../CadastroUsuario"
 import { UsuarioContext, UsuarioContextProvider } from "../../../context/UsuarioContext"
-import { editarUsuario } from "../../../service/UsuarioService";
+import { cadastrarUsuario, editarUsuario } from "../../../service/UsuarioService";
+import userEvent from "@testing-library/user-event";
 
 
 jest.mock("../../../service/UsuarioService", () => ({
@@ -10,6 +11,15 @@ jest.mock("../../../service/UsuarioService", () => ({
     data: { message: "Usuário editado com sucesso" },
   }),
 }));
+
+
+jest.mock("../../../service/UsuarioService", () => ({
+  cadastrarUsuario: jest.fn().mockResolvedValue({
+    status: 200,
+    data: { message: "Usuário cadastrado com sucesso" },
+  }),
+}));
+
 
 
 const mockedContext = {
@@ -102,9 +112,63 @@ describe("CadastroUsuario", ()=>{
         expect(alertMock).toHaveBeenCalledTimes(1);
         expect(alertMock).toHaveBeenCalledWith("usuario editado com sucesso");
       });
-
-
-
   
   });
+
+
+  it("Deve chamar as funções corretas ao criar novo cadastro", async () => {
+
+
+    const mockedContextAjustado = {...mockedContext,
+         editar:false,
+         usuario: {id: 0, nome: "", email: "", dataCadastro: "", telefone: "" }}
+
+         const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
+  
+    render(
+      <UsuarioContext.Provider value={mockedContextAjustado}>
+        <CadastroUsuario setNovoUsuario={jest.fn()} />
+      </UsuarioContext.Provider>
+    );
+  
+    await userEvent.type(screen.getByPlaceholderText("Digite o nome do usuário"), "Leonardo")
+    await userEvent.type(screen.getByPlaceholderText("Digite o e-mail do usuário"), "leonardo@email.com")
+    await userEvent.type(screen.getByText("Data cadastro:"), "2025-02-20")
+    await userEvent.type(screen.getByPlaceholderText("(00)00000-0000"), "44998240563")
+
+  
+    expect(screen.getByPlaceholderText("Digite o nome do usuário")).toHaveValue("Leonardo")
+    expect(screen.getByPlaceholderText("Digite o e-mail do usuário")).toHaveValue("leonardo@email.com")
+    expect(screen.getByTestId("dataCadastro")).toHaveValue("2025-02-20")
+
+
+    fireEvent.click(screen.getByRole("button", {name: "Enviar"}))
+
+    await waitFor(() => {
+      expect(cadastrarUsuario).toHaveBeenCalledTimes(1);
+      expect(alertMock).toHaveBeenCalledTimes(1);
+      expect(alertMock).toHaveBeenCalledWith("usuario cadastrado com sucesso");
+    });
+})
+
+  
+it("Deve chamar as funções corretas ao fechar tela de cadastro", async ()=>{
+
+  render(
+    <UsuarioContext.Provider value={mockedContext}>
+      <CadastroUsuario setNovoUsuario={jest.fn()}/>
+    </UsuarioContext.Provider>
+  )
+
+  await fireEvent.click(screen.getByRole("button", {name:"Fechar"}))
+
+  await waitFor(()=>{
+    expect(screen.getByText("Cadastro de usuário")).not.toBeInTheDocument();
+  })
+  
+
+})
+
+  
+
 })

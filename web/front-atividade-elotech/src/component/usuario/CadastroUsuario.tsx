@@ -129,7 +129,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
          </label>
         <label>
             <span>Data cadastro:</span>
-            <Field type="date" name="dataCadastro"/>
+            <Field data-testId="dataCadastro" type="date" name="dataCadastro"/>
             <ErrorMessage component="div" name="dataCadastro"/>
         </label>
         <label>
