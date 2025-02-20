@@ -67,7 +67,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
             if(response.status === 200){
 
-                alert("usuario editado com sucesso")
+                alert("usuario cadastrado com sucesso")
                 
                 actions.resetForm()
 

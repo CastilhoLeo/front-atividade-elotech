@@ -1,6 +1,16 @@
-import {  fireEvent, render, screen } from "@testing-library/react"
+import {  act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import CadastroUsuario from "../CadastroUsuario"
 import { UsuarioContext, UsuarioContextProvider } from "../../../context/UsuarioContext"
+import { editarUsuario } from "../../../service/UsuarioService";
+
+
+jest.mock("../../../service/UsuarioService", () => ({
+  editarUsuario: jest.fn().mockResolvedValue({
+    status: 200,
+    data: { message: "Usuário editado com sucesso" },
+  }),
+}));
+
 
 const mockedContext = {
     editar: false, 
@@ -16,6 +26,8 @@ const mockedContext = {
     erro: "",
     setErro: jest.fn(),
   };
+
+
 
 
 describe("CadastroUsuario", ()=>{
@@ -53,7 +65,7 @@ describe("CadastroUsuario", ()=>{
 
         const mockedContextAjustado = {...mockedContext,
              editar:true,
-             usuario: {...mockedContext.usuario, nome:"Leonardo"}}
+             usuario: { id: 1, nome: "Leonardo", email: "leonardo@email.com", dataCadastro: "2024-10-01", telefone: "44998240563" }}
       
         render(
           <UsuarioContext.Provider value={mockedContextAjustado}>
@@ -64,13 +76,17 @@ describe("CadastroUsuario", ()=>{
         expect(screen.getByText("Cadastro de usuário")).toBeInTheDocument();
 
         expect(screen.getByPlaceholderText("Digite o nome do usuário")).toHaveValue("Leonardo");
+
     });
 
-    it("Deve chamar as funções corretas ao editar", () => {
+    it("Deve chamar as funções corretas ao editar", async () => {
+
 
       const mockedContextAjustado = {...mockedContext,
            editar:true,
-           usuario: {...mockedContext.usuario, nome:"Leonardo"}}
+           usuario: {id: 1, nome: "Leonardo", email: "leonardo@email.com", dataCadastro: "2024-10-01", telefone: "44998240563" }}
+
+           const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
     
       render(
         <UsuarioContext.Provider value={mockedContextAjustado}>
@@ -78,8 +94,17 @@ describe("CadastroUsuario", ()=>{
         </UsuarioContext.Provider>
       );
     
+      
       fireEvent.click(screen.getByRole("button", {name: "Enviar"}))
 
-      
+      await waitFor(() => {
+        expect(editarUsuario).toHaveBeenCalledTimes(1);
+        expect(alertMock).toHaveBeenCalledTimes(1);
+        expect(alertMock).toHaveBeenCalledWith("usuario editado com sucesso");
+      });
+
+
+
+  
   });
 })
