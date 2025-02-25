@@ -3,7 +3,7 @@ import { Usuario } from "../types/Usuario"
 
 const urlBase:String = "http://localhost:8080/usuario"
 
-export const pesquisarUsuario = async (pesquisa: String)=>{
+export const pesquisarUsuario = async (pesquisa: string)=>{
 
 
     const response = await axios.get(`${urlBase}?nome=${pesquisa}`)
