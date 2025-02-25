@@ -31,4 +31,18 @@ describe("Usuario", ()=>{
         expect(screen.getByText("Cadastro de usuário")).toBeInTheDocument()
 
     })
+
+    it("Deve fechar form de cadastro de usuário ao clicar em fechar",  ()=>{
+
+        render(
+            <Usuario/>
+        )
+
+        fireEvent.click(screen.getByText("Novo Usuario"))
+
+        fireEvent.click(screen.getByRole('button', {name: "Fechar"}))
+
+        expect(screen.queryByText("Cadastro de usuário")).not.toBeInTheDocument()
+
+    })
 })

@@ -1,4 +1,4 @@
-import {  act, fireEvent, getByRole, render, screen, waitFor } from "@testing-library/react"
+import {  fireEvent, render, screen, waitFor } from "@testing-library/react"
 import CadastroUsuario from "../CadastroUsuario"
 import { UsuarioContext, UsuarioContextProvider } from "../../../context/UsuarioContext"
 import { cadastrarUsuario, editarUsuario } from "../../../service/UsuarioService";
