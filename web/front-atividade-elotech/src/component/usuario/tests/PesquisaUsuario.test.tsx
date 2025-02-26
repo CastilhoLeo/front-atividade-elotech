@@ -1,16 +1,9 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { UsuarioContext } from "../../../context/UsuarioContext"
 import PesquisaUsuario from "../PesquisaUsuario"
 import userEvent from "@testing-library/user-event"
-import { pesquisarUsuario } from "../../../service/UsuarioService"
 
 
-jest.mock("../../../service/UsuarioService", ()=>({
-    pesquisarUsuario: jest.fn().
-    mockResolvedValue({status: 200, data:[]})
-}))
-
-pesquisarUsuario
 
 const mockedContext = {
     editar: false, 
@@ -39,8 +32,7 @@ describe("PesquisaUsuario", ()=>{
         expect(screen.getByRole("button", {name:"Pesquisar"}))
     })
 
-    it("deve conter valor correto ao pesquisar", ()=>{
-
+    it("deve conter valor correto ao pesquisar", async ()=>{
 
         render(
             <UsuarioContext.Provider value={mockedContext}>
@@ -48,15 +40,16 @@ describe("PesquisaUsuario", ()=>{
             </UsuarioContext.Provider>
         )
 
-        userEvent.type(screen.getByPlaceholderText("Digite o nome do usuário"), ("Leonardo"))
 
-        fireEvent.click(screen.getByRole("button", {name:"Pesquisar"}))
+        await userEvent.type(screen.getByPlaceholderText("Digite o nome do usuário"), "Leonardo");
 
-        expect(pesquisarUsuario).toHaveBeenCalledTimes(1)
+        fireEvent.submit(screen.getByRole("form"))
+        
 
-
+        await waitFor(()=>{
+            expect(mockedContext.setPesquisa).toHaveBeenCalledWith("Leonardo")
+        })
 
     })
-
 
 })

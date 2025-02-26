@@ -28,7 +28,7 @@ const PesquisaUsuario = () => {
 
     {({handleSubmit})=>(
 
-    <form className={styles.input_pesquisa} onSubmit={handleSubmit}>
+    <form className={styles.input_pesquisa} onSubmit={handleSubmit} role="form">
       <label>
         <Field type="text" name="nome" placeholder="Digite o nome do usuário"/>
       </label>
