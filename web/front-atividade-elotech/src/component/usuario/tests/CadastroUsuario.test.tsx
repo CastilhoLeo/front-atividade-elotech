@@ -1,4 +1,4 @@
-import {  fireEvent, render, screen, waitFor } from "@testing-library/react"
+import {  cleanup, fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react"
 import CadastroUsuario from "../CadastroUsuario"
 import { UsuarioContext, UsuarioContextProvider } from "../../../context/UsuarioContext"
 import { cadastrarUsuario, editarUsuario } from "../../../service/UsuarioService";
@@ -8,17 +8,14 @@ import userEvent from "@testing-library/user-event";
 jest.mock("../../../service/UsuarioService", () => ({
   editarUsuario: jest.fn().mockResolvedValue({
     status: 200,
-    data: { message: "Usuário editado com sucesso" },
+    data: { message: "Usuário editado com sucesso" }
   }),
-}));
-
-
-jest.mock("../../../service/UsuarioService", () => ({
   cadastrarUsuario: jest.fn().mockResolvedValue({
     status: 200,
-    data: { message: "Usuário cadastrado com sucesso" },
+    data: { message: "Usuário cadastrado com sucesso" }
   }),
 }));
+
 
 
 
@@ -38,6 +35,10 @@ const mockedContext = {
   };
 
 
+  afterEach(() => {
+    cleanup();
+    jest.restoreAllMocks();
+  });
 
 
 describe("CadastroUsuario", ()=>{
@@ -154,21 +155,25 @@ describe("CadastroUsuario", ()=>{
   
 it("Deve chamar as funções corretas ao fechar tela de cadastro", async ()=>{
 
+  const setNovoUsuarioMock = jest.fn()
+
+
+
   render(
     <UsuarioContext.Provider value={mockedContext}>
-      <CadastroUsuario setNovoUsuario={jest.fn()}/>
+      <CadastroUsuario setNovoUsuario={setNovoUsuarioMock}/>
     </UsuarioContext.Provider>
   )
 
   await fireEvent.click(screen.getByRole("button", {name:"Fechar"}))
 
   await waitFor(()=>{
-    expect(screen.getByText("Cadastro de usuário")).not.toBeInTheDocument();
+
+    expect(setNovoUsuarioMock).toHaveBeenCalledWith(false);
+    
   })
   
 
-})
-
-  
+  })
 
 })

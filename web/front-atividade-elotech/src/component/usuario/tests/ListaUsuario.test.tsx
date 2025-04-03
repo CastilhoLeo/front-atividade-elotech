@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import ListaUsuarios from "../ListaUsuarios"
 import { UsuarioContext } from "../../../context/UsuarioContext"
 import { excluirUsuario, pesquisarUsuario } from "../../../service/UsuarioService";
@@ -27,6 +27,11 @@ const mockedContext = {
     erro: "",
     setErro: jest.fn(),
 }
+
+beforeEach(() => {
+    jest.clearAllMocks(); // Limpa contadores antes de cada teste
+  });
+
 
 describe("ListaUsuario", ()=>{
     it("Deve renderizar o componente corretamente", ()=>{
