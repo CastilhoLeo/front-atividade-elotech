@@ -65,7 +65,7 @@ const ListaLivros = ({setNovoLivro}:Props) => {
                         <td>{livro.titulo}</td>
                         <td>{livro.autor}</td>
                         <td>{livro.isbn}</td>
-                        <td>{new Date(livro.dataPublicacao).toLocaleDateString('pt-BR')}</td>
+                        <td>{new Date(`${livro.dataPublicacao}T12:00:00Z`).toLocaleDateString('pt-BR')}</td>
                         <td>{livro.categoria}</td>
                         <td>
                             <button onClick={()=>handleEditar(livro)}>Editar</button>

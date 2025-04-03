@@ -6,7 +6,7 @@ const emprestimoContextInicial: EmprestimoContextInicial = {
     setDados:()=>{},
     atualizaLista:false,
     setAtualizaLista:()=>{},
-    pesquisa:{tipo:"usuario", texto:""},
+    pesquisa:{tipo:"cliente", texto:""},
     setPesquisa:()=>{}
 }
 

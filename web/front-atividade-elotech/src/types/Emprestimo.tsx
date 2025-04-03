@@ -4,7 +4,7 @@ import { Usuario } from "./Usuario"
 
 export type Emprestimo = {
     id: number,
-    usuarioDTO: Usuario,
+    clienteDTO: Usuario,
     livroDTO: Livro,
     dataEmprestimo: Date,
     dataDevolucao: Date | null,

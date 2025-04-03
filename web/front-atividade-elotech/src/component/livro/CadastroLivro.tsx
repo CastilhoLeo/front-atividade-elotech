@@ -47,7 +47,7 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
 
         if(response.status === 200){
 
-          alert("usuario editado com sucesso")
+          alert("livro editado com sucesso")
 
 
         }else{
@@ -62,7 +62,7 @@ const CadastroLivro = ({setNovoLivro}:Props) => {
 
       if(response.status === 200){
 
-        alert("usuario editado com sucesso")
+        alert("livro cadastrado com sucesso")
 
         actions.resetForm()
 

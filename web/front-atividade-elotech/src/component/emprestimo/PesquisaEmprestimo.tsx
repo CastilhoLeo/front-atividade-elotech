@@ -26,7 +26,7 @@ const PesquisaEmprestimo = () => {
     <> 
     <Formik
     initialValues={{
-      tipo:"usuario",
+      tipo:"cliente",
       texto:""
 
     }}
@@ -38,7 +38,7 @@ const PesquisaEmprestimo = () => {
 
         <form className={style.input_pesquisa} onSubmit={handleSubmit}>
             <Field as="select" name="tipo">
-                 <option value="usuario">Usuario</option>
+                 <option value="cliente">Cliente</option>
                 <option value="titulo">Titulo</option>
             </Field>
 

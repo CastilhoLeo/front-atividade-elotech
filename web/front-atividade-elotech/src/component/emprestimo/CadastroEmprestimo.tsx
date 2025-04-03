@@ -23,7 +23,7 @@ const CadastroEmprestimo = ({cadastro, setCadastro}:Props) => {
   const {atualizaLista, setAtualizaLista} = context
 
   const requestPadrao = {
-    usuarioId:0,
+    clienteId:0,
     livroId:0,
     dataEmprestimo:new Date}
 
@@ -60,7 +60,7 @@ const CadastroEmprestimo = ({cadastro, setCadastro}:Props) => {
 
   const validationSchema:Yup.AnySchema = Yup.object({
 
-    usuarioId : Yup.number().required("O ID do usuário é obrigatório"),
+    clienteId : Yup.number().required("O ID do usuário é obrigatório"),
     livroId : Yup.number().required("O ID do livro é obrigatório"),
     dataEmprestimo : Yup.date().required("A data é obrigatória")
 
@@ -85,9 +85,9 @@ const CadastroEmprestimo = ({cadastro, setCadastro}:Props) => {
         <h1>Cadastro Empréstimo</h1>
 
         <label>
-          <span>Usuário ID</span>
-          <Field type="number" name="usuarioId" />
-          <ErrorMessage component="div" name="usuarioId"/>
+          <span>Cliente ID</span>
+          <Field type="number" name="clienteId" />
+          <ErrorMessage component="div" name="clienteId"/>
         </label>
         
         <label>

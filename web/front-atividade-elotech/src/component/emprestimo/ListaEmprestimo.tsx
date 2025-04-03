@@ -71,7 +71,7 @@ const ListaEmprestimo = ()=>{
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Usuario</th>
+                    <th>Cliente</th>
                     <th>Titulo</th>
                     <th>Data Empréstimo</th>
                     <th>Data Devolução</th>
@@ -83,10 +83,10 @@ const ListaEmprestimo = ()=>{
                 {dados.map((emprestimo:Emprestimo)=>(
                     <tr key={emprestimo.id}>
                         <td>{emprestimo.id}</td>
-                        <td>{emprestimo.usuarioDTO.nome}</td>
+                        <td>{emprestimo.clienteDTO.nome}</td>
                         <td>{emprestimo.livroDTO.titulo}</td>
-                        <td>{new Date(emprestimo.dataEmprestimo).toLocaleDateString("pt-BR")}</td>
-                        <td>{emprestimo.dataDevolucao && new Date(emprestimo.dataDevolucao).toLocaleDateString("pt-BR")}</td>
+                        <td>{new Date(`${emprestimo.dataEmprestimo}T12:00:00Z`).toLocaleDateString("pt-BR")}</td>
+                        <td>{emprestimo.dataDevolucao && new Date(`${emprestimo.dataDevolucao}T12:00:00Z`).toLocaleDateString("pt-BR")}</td>
                         <td>{emprestimo.status}</td>
                         <td>
                         {emprestimo.status == "EMPRESTADO" && <button onClick={()=>handleDevolucao(emprestimo.id)}>Devolver</button>}

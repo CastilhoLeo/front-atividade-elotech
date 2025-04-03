@@ -1,7 +1,7 @@
 import axios from "axios"
 import { Usuario } from "../types/Usuario"
 
-const urlBase:String = "http://localhost:8080/usuario"
+const urlBase:String = "http://localhost:8080/cliente"
 
 export const pesquisarUsuario = async (pesquisa: string)=>{
 
