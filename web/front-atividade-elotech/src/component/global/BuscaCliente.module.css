@@ -1,0 +1,17 @@
+.busca_cliente ul{
+    list-style: none;
+    margin: 0%;
+    padding: 0;
+    text-align: left;
+    width: 25.5em;
+}
+
+.busca_cliente li{
+    cursor: pointer;
+    border: solid 0.5px;
+}
+
+.busca_cliente{
+position: absolute;
+width: fit-content;
+}

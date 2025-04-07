@@ -1,28 +1,28 @@
 
 import { useContext } from 'react'
-import styles from './CadastroUsuario.module.css'
-import { UsuarioContext } from '../../context/UsuarioContext'
-import { Usuario } from '../../types/Usuario'
-import { cadastrarUsuario, editarUsuario } from '../../service/UsuarioService'
+import styles from './CadastroCliente.module.css'
+import { ClienteContext } from '../../context/ClienteContext'
+import { Cliente } from '../../types/Cliente'
+import { cadastrarCliente, editarCliente } from '../../service/ClienteService'
 import { ErrorMessage, Field, Formik, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 
 
 interface Props{
-    setNovoUsuario: React.Dispatch<React.SetStateAction<boolean>>
+    setNovoCliente: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CadastroUsuario = ({setNovoUsuario}:Props) => {
+const CadastroCliente = ({setNovoCliente}:Props) => {
 
-    const context = useContext(UsuarioContext);
+    const context = useContext(ClienteContext);
 
     if (!context) {
         throw new Error("Erro no context");
     }
 
-    const { usuario, setUsuario, atualizaLista, setAtualizaLista, editar, setEditar, erro, setErro } = context;
+    const { cliente, setCliente, atualizaLista, setAtualizaLista, editar, setEditar, erro, setErro } = context;
 
-    const usuarioPadrao:Usuario = {
+    const clientePadrao:Cliente = {
         id:0,
         nome: "",
         email:"",
@@ -32,28 +32,28 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
 
       const handleFechar = ()=>{
-        setNovoUsuario(false) 
+        setNovoCliente(false) 
         setEditar(false)
         setErro("")
 
         atualizaLista ? setAtualizaLista(false) : setAtualizaLista(true)
 
-        setUsuario(usuarioPadrao)
+        setCliente(clientePadrao)
       }
 
 
-    const handleSubmit =  async (usuario: Usuario, actions:FormikHelpers<Usuario>)=>{
+    const handleSubmit =  async (cliente: Cliente, actions:FormikHelpers<Cliente>)=>{
 
         try{
 
         
         if(editar){
 
-            const response = await editarUsuario(usuario)
+            const response = await editarCliente(cliente)
 
             if(response.status === 200){
 
-                alert("usuario editado com sucesso")
+                alert("cliente editado com sucesso")
 
             }else{
 
@@ -63,11 +63,11 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
         }else{
 
-            const response = await cadastrarUsuario(usuario)
+            const response = await cadastrarCliente(cliente)
 
             if(response.status === 200){
 
-                alert("usuario cadastrado com sucesso")
+                alert("cliente cadastrado com sucesso")
                 
                 actions.resetForm()
 
@@ -82,7 +82,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
     }
 
-    const valorInicial = editar? usuario : usuarioPadrao;
+    const valorInicial = editar? cliente : clientePadrao;
 
     const validationSchema:Yup.AnySchema = Yup.object({
         
@@ -99,7 +99,7 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
 
 
   return (
-    <div className={styles.cadastro_usuario}>
+    <div className={styles.cadastro_cliente}>
     
     <Formik
     initialValues={valorInicial}
@@ -110,8 +110,8 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
     
     >
     {({ handleSubmit }) => (
-      <form className={styles.usuario_form} onSubmit={handleSubmit}>
-        <h1>Cadastro de usuário</h1>
+      <form className={styles.cliente_form} onSubmit={handleSubmit}>
+        <h1>Cadastro de cliente</h1>
         {editar && (
         <label>
             <span>Id</span>
@@ -119,12 +119,12 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
         </label>)}
         <label>
             <span>Nome:</span>
-            <Field type="text" name="nome" placeholder="Digite o nome do usuário"/>
+            <Field type="text" name="nome" placeholder="Digite o nome do cliente"/>
             <ErrorMessage component="div" name="nome"/>
         </label>
         <label>
             <span>E-mail:</span>
-            <Field type="text" name="email" placeholder="Digite o e-mail do usuário"/>
+            <Field type="text" name="email" placeholder="Digite o e-mail do cliente"/>
             <ErrorMessage component="div" name="email"/>
          </label>
         <label>
@@ -150,4 +150,4 @@ const CadastroUsuario = ({setNovoUsuario}:Props) => {
   )
 }
 
-export default CadastroUsuario
+export default CadastroCliente

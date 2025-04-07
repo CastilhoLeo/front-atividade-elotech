@@ -18,9 +18,16 @@ export const cadastrarEmprestimo = async (requestEmprestimoDTO:RequestEmprestimo
 
 }
 
-export const devolverEmprestimo = async(requestDevolucao:any)=>{
+export const devolverEmprestimo = async(requestDevolucao:{emprestimoId: number, dataDevolucao: Date})=>{
 
-    const response = await axios.put(`${urlBase}/${requestDevolucao.id}`,requestDevolucao.dataDevolucao)
+    const response = await axios.put(`${urlBase}/${requestDevolucao.emprestimoId}`,
+        JSON.stringify(requestDevolucao.dataDevolucao),
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
 
     return response
 }

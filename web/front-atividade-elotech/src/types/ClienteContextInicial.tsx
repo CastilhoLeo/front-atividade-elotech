@@ -1,12 +1,12 @@
-import { Usuario } from "./Usuario"
+import { Cliente } from "./Cliente"
 
-export type UsuarioContextInicial = {
-    dados: Array<Usuario>;
-    setDados:(novoState:Array<Usuario>)=> void;
+export type ClienteContextInicial = {
+    dados: Array<Cliente>;
+    setDados:(novoState:Array<Cliente>)=> void;
     pesquisa: string;
     setPesquisa:(novoState: string)=> void;
-    usuario: Usuario;
-    setUsuario:(novoState:any)=> void;
+    cliente: Cliente;
+    setCliente:(novoState:any)=> void;
     atualizaLista:boolean;
     setAtualizaLista:(novoState: boolean)=> void;
     editar:boolean;

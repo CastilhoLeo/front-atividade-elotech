@@ -31,8 +31,8 @@ describe("App", ()=>{
 
     })
 
-    it("deve renderizar o component usuario ao utilizar a rota", async()=>{
-        const route = '/usuarios'
+    it("deve renderizar o component cliente ao utilizar a rota", async()=>{
+        const route = '/clientes'
 
         render(
             <MemoryRouter initialEntries={[route]}>
@@ -40,7 +40,7 @@ describe("App", ()=>{
             </MemoryRouter>
         )
 
-        expect(screen.getByRole('button',{name:'Novo Usuario'})).toBeInTheDocument()
+        expect(screen.getByRole('button',{name:'Novo Cliente'})).toBeInTheDocument()
   
     })
 
@@ -79,7 +79,7 @@ describe("App", ()=>{
             </MemoryRouter>
         )
 
-        expect(screen.getByText('Gerar recomendações para o usuário')).toBeInTheDocument()
+        expect(screen.getByText('Gerar recomendações para o cliente')).toBeInTheDocument()
   
     })
 

@@ -1,10 +1,10 @@
 import { Livro } from "./Livro"
-import { Usuario } from "./Usuario"
+import { Cliente } from "./Cliente"
 
 
 export type Emprestimo = {
     id: number,
-    clienteDTO: Usuario,
+    clienteDTO: Cliente,
     livroDTO: Livro,
     dataEmprestimo: Date,
     dataDevolucao: Date | null,

@@ -18,10 +18,7 @@ const ListaEmprestimo = ()=>{
     const {dados, setDados, atualizaLista, setAtualizaLista, pesquisa} = context
 
     const[devolucao, setDevolucao] = useState(false)
-    const[requestDevolucao, setRequestDevolucao] = useState({
-        id: 0,
-        dataDevolucao: new Date
-    })
+    const[requestDevolucao, setRequestDevolucao] = useState(0)
 
     useEffect(()=>{
 
@@ -41,18 +38,17 @@ const ListaEmprestimo = ()=>{
     const handleDevolucao = (id:number)=>{
 
         setDevolucao(!devolucao)
-        setRequestDevolucao((prevRequestDevolucao)=>({
-            ...prevRequestDevolucao,
-            id:id
-        }))
+        setRequestDevolucao(id)
         
     }
 
 
-    const handleSubmit = async ()=>{
 
+    const handleSubmit = async (devolucao:{emprestimoId:number, dataDevolucao: Date})=>{
 
-        await devolverEmprestimo(requestDevolucao)
+        console.log(devolucao)
+
+        await devolverEmprestimo(devolucao)
 
         setDevolucao(!devolucao)
 
@@ -99,18 +95,28 @@ const ListaEmprestimo = ()=>{
 
                 <Formik 
                 
-                initialValues={
-                    requestDevolucao
-                }
+                initialValues={{
+                    emprestimoId: requestDevolucao,
+                    dataDevolucao: new Date()
+                }}
                 
-                onSubmit={handleSubmit}
-                >
+                onSubmit={(values)=>{
+                    const devolucao ={
+                        emprestimoId: requestDevolucao,
+                        dataDevolucao: values.dataDevolucao
+                    }
+
+                    handleSubmit(devolucao)
+                }}
+
+
+                >{({handleSubmit})=>(
                     
                     <form onSubmit={handleSubmit} className={styles.devolucao_form}>
                         <h1>Devolução</h1>
                         <label>
                             <span>Emprestimo ID</span>
-                            <Field type="number" name="emprestimoId" value={requestDevolucao.id} disabled/>
+                            <Field type="number" name="emprestimoId" value={requestDevolucao} disabled/>
                         </label>
                         <label>
                             <span>Data Devolução</span>
@@ -120,7 +126,7 @@ const ListaEmprestimo = ()=>{
                             <button className="btn_salvar">Confirmar</button>
                             <button className="btn_fechar" onClick={handleCancelarDevolucao}>Cancelar</button>
                         </div>
-                    </form>
+                    </form>)}
                 </Formik>
                 </div>}
                 

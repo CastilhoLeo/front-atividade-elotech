@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import { UsuarioContext } from "../../../context/UsuarioContext"
-import PesquisaUsuario from "../PesquisaUsuario"
+import { ClienteContext } from "../../../context/ClienteContext"
+import PesquisaCliente from "../PesquisaCliente"
 import userEvent from "@testing-library/user-event"
 
 
@@ -12,21 +12,21 @@ const mockedContext = {
     setDados: jest.fn(),
     pesquisa: "",
     setPesquisa: jest.fn(),
-    usuario: { id: 0, nome: "", email: "", dataCadastro: new Date().toDateString(), telefone: "" },
-    setUsuario: jest.fn(),
+    cliente: { id: 0, nome: "", email: "", dataCadastro: new Date().toDateString(), telefone: "" },
+    setCliente: jest.fn(),
     atualizaLista: false,
     setAtualizaLista: jest.fn(),
     erro: "",
     setErro: jest.fn(),
 }
 
-describe("PesquisaUsuario", ()=>{
+describe("PesquisaCliente", ()=>{
     it("deve rederizar componente corretamente", ()=>{
 
         render(
-            <UsuarioContext.Provider value={mockedContext}>
-                <PesquisaUsuario/>
-            </UsuarioContext.Provider>
+            <ClienteContext.Provider value={mockedContext}>
+                <PesquisaCliente/>
+            </ClienteContext.Provider>
         )
 
         expect(screen.getByRole("button", {name:"Pesquisar"}))
@@ -35,13 +35,13 @@ describe("PesquisaUsuario", ()=>{
     it("deve conter valor correto ao pesquisar", async ()=>{
 
         render(
-            <UsuarioContext.Provider value={mockedContext}>
-                <PesquisaUsuario/>
-            </UsuarioContext.Provider>
+            <ClienteContext.Provider value={mockedContext}>
+                <PesquisaCliente/>
+            </ClienteContext.Provider>
         )
 
 
-        await userEvent.type(screen.getByPlaceholderText("Digite o nome do usuário"), "Leonardo");
+        await userEvent.type(screen.getByPlaceholderText("Digite o nome do cliente"), "Leonardo");
 
         fireEvent.submit(screen.getByRole("form"))
         

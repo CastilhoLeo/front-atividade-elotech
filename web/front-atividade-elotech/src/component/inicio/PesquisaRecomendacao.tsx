@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { pesquisarUsuario } from '../../service/UsuarioService'
+import { pesquisarCliente } from '../../service/ClienteService'
 import { Livro } from '../../types/Livro'
-import BuscaUsuario from '../global/BuscaUsuario'
+import BuscaCliente from  '../global/BuscaCliente'
 import styles from './PesquisaRecomendacao.module.css'
-import { Usuario } from '../../types/Usuario'
+import { Cliente } from '../../types/Cliente'
 import { GeraRecomendacoes } from '../../service/RecomendacaoService'
 
 interface Props {
@@ -12,68 +12,64 @@ interface Props {
 
 const PesquisaRecomendacao = ({setRecomendacoes}:Props) => {
 
-    const [nomeUsuario, setNomeUsuario] = useState("")
-    const [listaUsuarios, setListaUsuarios] = useState<Array<Usuario>>([])
-    const [usuarioSelecionado, setUsuarioSelecionado] = useState<Usuario>()
+    const [nomeCliente, setNomeCliente] = useState("")
+    const [listaClientes, setListaClientes] = useState<Array<Cliente>>([])
+    const [clienteSelecionado, setClienteSelecionado] = useState<Cliente>()
 
 
     useEffect(()=>{
 
-        const recomendacao =  async (usuario:Usuario)=>{
+        const recomendacao =  async (cliente:Cliente)=>{
 
-        const dados = await GeraRecomendacoes(usuario.id)
+        const dados = await GeraRecomendacoes(cliente.id)
 
         setRecomendacoes(dados.data)
     }
 
-    if(usuarioSelecionado)
+    if(clienteSelecionado)
 
-    recomendacao(usuarioSelecionado)
+    recomendacao(clienteSelecionado)
 
-    },[usuarioSelecionado])
+    },[clienteSelecionado])
     
 
 
     const handleChange = (values:string)=>{
-        setNomeUsuario(values)
+        setNomeCliente(values)
         console.log(values)
     }
 
 
     useEffect(()=>{
 
-        {
-        const buscarUsuarios = async (nomeUsuario:string)=>{
         
-            const usuarios = await  pesquisarUsuario(nomeUsuario)
+        const listarClientes = async ()=>{
 
-            if(nomeUsuario.length >=3){
+        if(nomeCliente.length > 0){
 
-            setListaUsuarios(usuarios.data)
-            } else {
-                setListaUsuarios([])
-            }
-    
+        const res = await pesquisarCliente(nomeCliente)
+
+        setListaClientes(res.data)
+        }else{
+            setListaClientes([])
         }
-
-        buscarUsuarios(nomeUsuario)
 
     }
 
-    },[nomeUsuario])
+    listarClientes()
+
+    },[nomeCliente])
 
 
   return (
     <>
     <div className={styles.recomendacoes}>
-       
         <label>
-            <span>Nome Usuario: </span>
-            <input type="text" name='nomeUsuario'  onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{handleChange(e.target.value)}} value={nomeUsuario}/>
+            <input type="text" name='nomeCliente' placeholder='Nome do cliente' onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{handleChange(e.target.value)}} value={nomeCliente}/>
+            <BuscaCliente listaClientes={listaClientes} setClienteSelecionado={setClienteSelecionado}/>
         </label>
-
-    </div>
-    <BuscaUsuario listaUsuarios={listaUsuarios} setUsuarioSelecionado={setUsuarioSelecionado}/>
+        </div>
+    
     </>
   )
 }

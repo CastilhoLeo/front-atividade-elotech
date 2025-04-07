@@ -1,8 +1,8 @@
-.usuario {
+.cliente {
     text-align: center;
 }
 
-.menu_usuario{
+.menu_cliente{
     display: flex;
     justify-content: center;
 }

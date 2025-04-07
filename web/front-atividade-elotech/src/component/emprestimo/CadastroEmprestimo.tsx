@@ -60,7 +60,7 @@ const CadastroEmprestimo = ({cadastro, setCadastro}:Props) => {
 
   const validationSchema:Yup.AnySchema = Yup.object({
 
-    clienteId : Yup.number().required("O ID do usuário é obrigatório"),
+    clienteId : Yup.number().required("O ID do cliente é obrigatório"),
     livroId : Yup.number().required("O ID do livro é obrigatório"),
     dataEmprestimo : Yup.date().required("A data é obrigatória")
 

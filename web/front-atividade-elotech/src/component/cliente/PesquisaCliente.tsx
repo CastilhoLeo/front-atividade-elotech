@@ -1,11 +1,11 @@
 import {  useContext } from "react"
-import { UsuarioContext } from "../../context/UsuarioContext"
-import styles from "./PesquisaUsuario.module.css"
+import { ClienteContext } from "../../context/ClienteContext"
+import styles from "./PesquisaCliente.module.css"
 import { Field, Formik } from "formik"
 
-const PesquisaUsuario = () => {
+const PesquisaCliente = () => {
 
-  const context = useContext(UsuarioContext)
+  const context = useContext(ClienteContext)
   if(!context){
     throw new Error ("Erro no contexto")
   }
@@ -30,7 +30,7 @@ const PesquisaUsuario = () => {
 
     <form className={styles.input_pesquisa} onSubmit={handleSubmit} role="form">
       <label>
-        <Field type="text" name="nome" placeholder="Digite o nome do usuário"/>
+        <Field type="text" name="nome" placeholder="Digite o nome do cliente"/>
       </label>
       <button type="submit">Pesquisar</button>
       </form>
@@ -41,4 +41,4 @@ const PesquisaUsuario = () => {
   )
 }
 
-export default PesquisaUsuario
+export default PesquisaCliente
